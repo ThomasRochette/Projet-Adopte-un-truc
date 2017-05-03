@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django import forms
 from django.db import models
+from django.contrib.auth.models import User
 
 class Categorie(models.Model):
     titre = models.CharField(max_length=20)
@@ -18,4 +19,8 @@ class Objet(models.Model):
 
 class Comentaire(models.Model):
     description = models.TextField(null=True, max_length=200, default = "Description par defaut")
+    objet = models.ForeignKey('Objet')
+
+class Profil(models.Model):
+    user = models.OneToOneField(User)
     objet = models.ForeignKey('Objet')
