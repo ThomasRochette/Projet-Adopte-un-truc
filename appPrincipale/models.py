@@ -11,16 +11,18 @@ class Categorie(models.Model):
     def __str__(self):
         return self.titre
 
+class Profil(models.Model):
+    user = models.OneToOneField(User)
+
 class Objet(models.Model):
-	nom = models.CharField(max_length=40)
-	categorie = models.ForeignKey('Categorie')
-	description = models.TextField(null=True, max_length=500, default ="Pas de description")
-	image=models.ImageField( null=True, upload_to="photos/", default = "imagesdefaut.png")
+    nom = models.CharField(max_length=40)
+    categorie = models.ForeignKey('Categorie')
+    proprietaire = models.ForeignKey('Profil', on_delete=models.CASCADE)
+    description = models.TextField(null=True, max_length=500, default ="Pas de description")
+    image=models.ImageField( null=True, upload_to="photos/", default = "imagesdefaut.png")
+
+
 
 class Comentaire(models.Model):
     description = models.TextField(null=True, max_length=200, default = "Description par defaut")
-    objet = models.ForeignKey('Objet')
-
-class Profil(models.Model):
-    user = models.OneToOneField(User)
     objet = models.ForeignKey('Objet')
