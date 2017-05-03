@@ -4,13 +4,33 @@
         <meta charset="utf-8" />
         <title>Titre</title>
         
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'appPrincipale/voirFormulaire.css' %}">
     </head>
 
     <body>
+	 	
+		<form id="id" action="{% url "recherche" %}" method="post">
+			{% csrf_token %}
+			
+			<select name="Categorie" size="l">
+			<option>Catégorie
+			{% for categorie in categories %}
+			<option>{{categorie.titre}}
+			{% endfor %}
+			</select>
+			
+			<input type="submit" value="Recherche"/>
+		</form>
 		
-		<p>voila ce que j'ai recu  : {{id}}</p>
+		{{string_recherche_categorie}}
+		{{recherche_categories}}
+		
+		{% for recherche_objet in recherche_objets %}
+			<h2>{{ recherche_objet.categorie }}</h2>
+			<h2>{{ recherche_objet.nom }}</h2>
+			<h2>{{ recherche_objet.description|truncatewords:10 }}</h2>
+			<h2>{{ recherche_objet.id}}</h2>
+		{% endfor %}
+		
 		
 		
 	</body>
