@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Titre</title>
+
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'appPrincipale/voirFormulaire.css' %}">
+    </head>
+
+    <body>
+
+		{% if envoie %} Votre message a bien été enregistré
+				<form id="id" action="{% url "lire" %}" method="post">
+					{% csrf_token %}
+					<input type="submit" value="Voir mes articles"/>
+				</form>
+		{% endif %}
+
+		{% if modifie %} Article à modifier {% endif %}
+			<form action="{% url "ajouter_un_objet" %}" method="post">
+
+				{% csrf_token %}
+				{{form.as_p}}
+
+				{% if modifie %}
+				<input type="hidden" name="return_objet" value={{objetID}} />
+				{% endif %}
+				<input type="submit" value="Envoyer"/>
+
+			</form>
+		
+
+
+	</body>
+</html>
