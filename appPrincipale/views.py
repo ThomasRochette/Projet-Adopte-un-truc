@@ -77,5 +77,5 @@ def profile(request):
         return redirect('/accueil/login')
 
 def logout_view(request):
-    auth.lougout(request)
+    #auth.lougout(request)
     return HttpResponse("test")
