@@ -63,11 +63,19 @@ def TOUTsupprimer(request) :
 
 def formulaire_commentaire(request):
     form=ComentaireForm(request.POST or None)
+
     if form.is_valid() :
         form.save()
         envoie=True
+        return redirect(lire)
     return render(request , 'appPrincipale/voirFormulaire_commentaire.html', locals())
 
+def afficher_objet(request):
+    monid=request.GET.get("return_objet","0");
+    monobjet= Objet.objects.filter(id=monid);
+
+
+    return render(request , 'appPrincipale/objet.html', {'objets': monobjet})
 
 def profile(request):
     nom = request.user.username
@@ -77,5 +85,7 @@ def profile(request):
         return redirect('/accueil/login')
 
 def logout_view(request):
+
+    auth.lougout(request)
     #auth.lougout(request)
     return HttpResponse("test")
