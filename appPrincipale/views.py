@@ -1,12 +1,20 @@
-from django.shortcuts import render
 #from __future__ import unicode_literals
+
+
+from appPrincipale.models import Categorie,Objet
+
+from .forms import ObjetForm, ComentaireForm
+
 from django.http import HttpResponse
-from django.http import Http404
+from django.http import HttpResponse, Http404
+
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect
 from datetime import datetime
-from django.shortcuts import get_object_or_404
-from appPrincipale.models import Categorie,Objet
-from .forms import ObjetForm, ComentaireForm
+
+from django.contrib import auth
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -59,3 +67,15 @@ def formulaire_commentaire(request):
         form.save()
         envoie=True
     return render(request , 'appPrincipale/voirFormulaire_commentaire.html', locals())
+
+
+def profile(request):
+    nom = request.user.username
+    if(nom != ''):
+        return render(request, 'appPrincipale/profile.html', locals())
+    else:
+        return redirect('/accueil/login')
+
+def logout_view(request):
+    auth.lougout(request)
+    return HttpResponse("test")
