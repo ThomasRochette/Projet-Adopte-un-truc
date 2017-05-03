@@ -11,6 +11,29 @@ from .forms import ObjetForm, ComentaireForm
 
 # Create your views here.
 #voir MonObjet et les images
+
+def new_blog(request):
+    	return render(request , 'appPrincipale/blog.html')
+
+def new_about(request):
+    return render(request, 'appPrincipale/about.html')
+
+def new_contact(request):
+    return render(request, 'appPrincipale/contact.html')
+
+def new_index(request):
+    categories = Categorie.objects.all()
+    objets = Objet.objects.all()
+    return render(request, 'appPrincipale/index.html',locals())
+
+def new_services(request):
+    return render(request, 'appPrincipale/services.html')
+
+def new_work(request):
+    objets = Objet.objects.all()
+    return render(request, 'appPrincipale/work.html', locals())
+
+
 def lire(request):
     monobjet = Objet.objects.all()
     return render(request, 'appPrincipale/lire.html', {'objets': monobjet})
