@@ -70,12 +70,15 @@ def formulaire_commentaire(request):
         return redirect(lire)
     return render(request , 'appPrincipale/voirFormulaire_commentaire.html', locals())
 
+<<<<<<< HEAD
 def afficher_objet(request):
     monid=request.GET.get("return_objet","0");
     monobjet= Objet.objects.filter(id=monid);
 
 
     return render(request , 'appPrincipale/objet.html', {'objets': monobjet})
+=======
+>>>>>>> 6bbd79056046edb40891aacc743c7f9388074684
 
 def profile(request):
     nom = request.user.username
@@ -85,5 +88,9 @@ def profile(request):
         return redirect('/accueil/login')
 
 def logout_view(request):
+<<<<<<< HEAD
     auth.lougout(request)
+=======
+    #auth.lougout(request)
+>>>>>>> 6bbd79056046edb40891aacc743c7f9388074684
     return HttpResponse("test")
