@@ -18,7 +18,7 @@ urlpatterns = [
 	url(r'^login/$', auth_views.login, name='login'),
 	url(r'^logout/$', auth_views.logout, {'next_page': '/accueil/lire'}, name='logout'),
 	url(r'^profile/$', views.profile),
-	
+	url(r'^signup/$', views.signup, name='signup'),
 	url(r'^recherche/$',views.barre_recherche, name='recherche'),
 
 
