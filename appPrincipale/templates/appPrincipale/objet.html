@@ -10,19 +10,8 @@
 
     <body>
 
-			<h1> Articles disponibles dans ma boutique </h1>
-			<form id="id" action="{% url "ajouter_un_objet" %}" method="post">
-					{% csrf_token %}
-					<input type="submit" value="ajouter un Objet"/>
-			</form>
-
-
-			<form id="id" action="{% url "tout_supprimer" %}" method="get">
-				{% csrf_token %}
-				<input type="submit" value="Tout supprimer"/>
-			</form>
-
 				{% for objet in objets %}
+        <h1> {{objets.id}}</h1>
         <div id='box_object'>
 
 					<div id='box_img'>
