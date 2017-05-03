@@ -89,3 +89,12 @@ def logout_view(request):
     auth.lougout(request)
     #auth.lougout(request)
     return HttpResponse("test")
+
+def barre_recherche(request):
+	categories = Categorie.objects.all()
+	if request.method=="POST" :
+		string_recherche_categorie=request.POST.get("Categorie","0")
+		macat=Categorie.objects.filter(titre=string_recherche_categorie)
+		recherche_objets = Objet.objects.filter(categorie=macat)
+		
+	return render(request, 'appPrincipale/test.html', locals())
