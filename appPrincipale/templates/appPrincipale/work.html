@@ -36,10 +36,8 @@
 
 	<link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-
-	<!-- Animate.css -->
 	{% load static %}
-
+	<!-- Animate.css -->
 	<link rel="stylesheet" href="{%static 'appPrincipale/css/animate.css' %}">
 	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="{%static 'appPrincipale/css/icomoon.css' %}">
@@ -64,9 +62,9 @@
 	<nav class="fh5co-nav" role="navigation">
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-5 text-right menu-1">
+				<div class="left-menu text-right menu-1">
 					<ul>
-						<li class="active"><a href="work">Tous les articles</a></li>
+						<li><a href="work">Tous les articles</a></li>
 						<li><a href="about">Mes annonces</a></li>
 						<li class="has-dropdown">
 							<a href="services">Accueil</a>
@@ -79,10 +77,10 @@
 						</li>
 					</ul>
 				</div>
-				<div class="col-xs-2 text-center">
+				<div class="logo text-center">
 					<div id="fh5co-logo"><a href="index">UnTruc</a></div>
 				</div>
-				<div class="col-xs-5 text-left menu-1">
+				<div class="right-menu text-left menu-1">
 					<ul>
 						<li><a href="blog">Connexion</a></li>
 						<li class="has-dropdown">
@@ -112,14 +110,15 @@
 							<h1>Que recherchez vous ?</h1>
 							<h2> Les résultats seront localisés au plus proche de vous</h2>
 							<div class="row">
-								<form class="form-inline" id="fh5co-header-subscribe">
+								<form class="form-inline" id="fh5co-header-subscribe" action="{% url "work" %}" method="post">
+									{% csrf_token %}
 									<div class="col-md-6 col-md-offset-3">
 										<div class="form-group">
 											<input type="text" class="form-control" id="addresse" placeholder="Addresse...">
 											<label class="categorie">
 											    Catégorie:
 											    <span class="custom-dropdown custom-dropdown--white">
-											        <select class="custom-dropdown__select custom-dropdown__select--white">
+											        <select class="custom-dropdown__select custom-dropdown__select--white" name="Titre_Categorie">
 																{% for categorie in categories %}
 																<option>{{categorie.titre}}</option>
 																{% endfor %}
@@ -128,13 +127,6 @@
 											    </span>
 											</label>
 
-
-												<!--<select class="form-control" id="addresse" name="Categorie" size="l">
-	                        <option>Catégorie
-	                        {% for categorie in categories %}
-	                        <option>{{categorie.titre}}
-	                        {% endfor %}
-                        </select>-->
 											<button type="submit" class="btn btn-default">Rechercher</button>
 										</div>
 									</div>

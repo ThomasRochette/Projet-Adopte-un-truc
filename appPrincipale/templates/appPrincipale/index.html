@@ -110,14 +110,15 @@
 							<h1>Que recherchez vous ?</h1>
 							<h2> Les résultats seront localisés au plus proche de vous</h2>
 							<div class="row">
-								<form class="form-inline" id="fh5co-header-subscribe">
+								<form class="form-inline" id="fh5co-header-subscribe" action="{% url "work" %}" method="post">
+									{% csrf_token %}
 									<div class="col-md-6 col-md-offset-3">
 										<div class="form-group">
 											<input type="text" class="form-control" id="addresse" placeholder="Addresse...">
 											<label class="categorie">
 											    Catégorie:
 											    <span class="custom-dropdown custom-dropdown--white">
-											        <select class="custom-dropdown__select custom-dropdown__select--white">
+											        <select class="custom-dropdown__select custom-dropdown__select--white" name="Titre_Categorie">
 																{% for categorie in categories %}
 																<option>{{categorie.titre}}</option>
 																{% endfor %}
@@ -126,13 +127,6 @@
 											    </span>
 											</label>
 
-
-												<!--<select class="form-control" id="addresse" name="Categorie" size="l">
-	                        <option>Catégorie
-	                        {% for categorie in categories %}
-	                        <option>{{categorie.titre}}
-	                        {% endfor %}
-                        </select>-->
 											<button type="submit" class="btn btn-default">Rechercher</button>
 										</div>
 									</div>

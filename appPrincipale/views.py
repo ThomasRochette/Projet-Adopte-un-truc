@@ -30,7 +30,14 @@ def new_services(request):
     return render(request, 'appPrincipale/services.html')
 
 def new_work(request):
-    objets = Objet.objects.all()
+    categories = Categorie.objects.all()
+    if request.method=="GET":
+        objets = Objet.objects.all()
+    if request.method == "POST":
+        string_titre_catgorie = request.POST.get("Titre_Categorie")
+        macat=Categorie.objects.filter(titre=string_titre_catgorie)
+        objets = Objet.objects.filter(categorie=macat)
+
     return render(request, 'appPrincipale/work.html', locals())
 
 
