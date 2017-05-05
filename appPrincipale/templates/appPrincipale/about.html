@@ -65,10 +65,10 @@
 			<div class="row">
 				<div class="col-xs-5 text-right menu-1">
 					<ul>
-						<li><a href="work">Tous les articles</a></li>
-						<li class="active"><a href="about">Mes annonces</a></li>
+						<li><a href="/accueil/work">Tous les articles</a></li>
+						<li class="active"><a href="/accueil/about">Profile</a></li>
 						<li class="has-dropdown">
-							<a href="services">Accueil</a>
+							<a href="/accueil/services">Accueil</a>
 							<ul class="dropdown">
 								<li><a href="#">Web Design</a></li>
 								<li><a href="#">eCommerce</a></li>
@@ -79,13 +79,18 @@
 					</ul>
 				</div>
 				<div class="col-xs-2 text-center">
-					<div id="fh5co-logo"><a href="index">UnTruc</a></div>
+					<div id="fh5co-logo"><a href="/accueil/index">UnTruc</a></div>
 				</div>
 				<div class="col-xs-5 text-left menu-1">
 					<ul>
-						<li><a href="blog">Connexion</a></li>
+						{% if nom == string.empty %}
+								<li><a href="/accueil/blog">Connexion</a></li>
+						{% endif %}
+						{% if nom != string.empty %}
+								<li><a href="/accueil/blog">Déconnexion</a></li>
+						{% endif %}
 						<li class="has-dropdown">
-							<a href="#">Inscription</a>
+							<a href="/accueil/inscription">Inscription</a>
 							<ul class="dropdown">
 								<li><a href="#">HTML5</a></li>
 								<li><a href="#">CSS3</a></li>
@@ -93,7 +98,7 @@
 								<li><a href="#">jQuery</a></li>
 							</ul>
 						</li>
-						<li><a href="contact">Ajouter un article</a></li>
+						<li><a href="/accueil/contact">Ajouter un article</a></li>
 					</ul>
 				</div>
 			</div>
@@ -108,8 +113,7 @@
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>About Us</h1>
-							<h2>Free html5 templates Made by <a href="http://freehtml5.co" target="_blank">freehtml5.co</a></h2>
+							<h1>Ton profile</h1>
 						</div>
 					</div>
 				</div>

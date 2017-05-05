@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+LOGIN_REDIRECT_URL = '/accueil/profile'
 # Application definition
 
 INSTALLED_APPS = [
