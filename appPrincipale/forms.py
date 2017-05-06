@@ -13,4 +13,5 @@ class ObjetForm(forms.ModelForm):
 class ComentaireForm(forms.ModelForm):
     class Meta:
         model = Comentaire
-        fields = '__all__'
+        #fields = '__all__'
+        exclude=('content_type','object_id','content_object')
