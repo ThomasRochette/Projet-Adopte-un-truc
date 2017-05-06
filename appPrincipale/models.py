@@ -24,5 +24,9 @@ class Objet(models.Model):
 
 
 class Comentaire(models.Model):
-    description = models.TextField(null=True, max_length=200, default = "Description par defaut")
-    objet = models.ForeignKey('Objet')
+    contenu = models.TextField(null=True, max_length=500, default ="Commentaire ...")
+    content_type = models.ForeignKey(ContentType,default=Objet)
+    object_id = models.PositiveIntegerField(default=1)
+    content_object = GenericForeignKey('content_type', 'object_id')
+    def __str__(self):
+        return "Commentaire de {0} sur {1}".format(self.contenu, self.content_object)
