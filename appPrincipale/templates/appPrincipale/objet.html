@@ -51,6 +51,25 @@
 				</form>
 				</div>
 				{% endfor %}
+				
+				
+				{% for commentaire in commentaires %}
+        <h1> {{commentaire.id}}</h1>
+        <div id='box_object'>
+
+					
+
+					<div id='box_txt'>
+						<h2>{{ commentaire.contenu}}</h2>
+						
+					</div>
+
+        
+
+				
+				</div>
+				{% endfor %}
+				
 
 
 
