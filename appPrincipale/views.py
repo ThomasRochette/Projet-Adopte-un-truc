@@ -1,7 +1,7 @@
 #from __future__ import unicode_literals
 
 
-from appPrincipale.models import Categorie,Objet
+from appPrincipale.models import Categorie,Objet,Comentaire
 
 from .forms import ObjetForm, ComentaireForm
 
@@ -85,20 +85,42 @@ def TOUTsupprimer(request) :
 	for article in Objet.objects.all():
 			article.delete();
 	return redirect(lire)
-
 def formulaire_commentaire(request):
     form=ComentaireForm(request.POST or None)
-
+    object_id=0
+    if request.method=="GET":
+		
+		objet_id=request.GET.get("objet_id","-1")
+		
+		print(objet_id)
+		
+    if request.method=="POST":
+		objet_id=request.POST.get("objet_id","-1")
+		initial_content_type=request.GET.get("initial_content_type","-1")
+		print(objet_id)
+		print(initial_content_type)
     if form.is_valid() :
-        form.save()
+		
+        comentaire=form.save(commit=False)
+        print("commentaire valide")
+        
+        objet=Objet.objects.get(id=objet_id)
+        comentaire.content_object=objet
+        
+        comentaire.object_id=objet_id
+        print(comentaire.contenu)
+        print(comentaire.object_id)
+        comentaire.save()
         envoie=True
         return redirect(lire)
     return render(request , 'appPrincipale/voirFormulaire_commentaire.html', locals())
 
+
 def afficher_objet(request):
     monid=request.GET.get("return_objet","0");
-    monobjet= Objet.objects.filter(id=monid);
-
+    objets= Objet.objects.filter(id=monid);
+    commentaires=Comentaire.objects.filter(object_id=monid)
+    #commentaires=Comentaire.objects.all()
 
     return render(request , 'appPrincipale/objet.html', {'objets': monobjet})
 
@@ -137,3 +159,5 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'appPrincipale/signup.html', {'form': form})
+
+
