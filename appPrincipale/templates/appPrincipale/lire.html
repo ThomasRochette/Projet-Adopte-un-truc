@@ -57,7 +57,7 @@
 
         <form id="id" action="{% url "commenter_objet" %}" method="get">
 				{% csrf_token %}
-					<input type="hidden" name="return_objet" value={{objet.id}} />
+					<input type="hidden" name="objet_id" value={{objet.id}} />
 					<input type="submit" value="Commenter"/>
 				</form>
 				</div>
