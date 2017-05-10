@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Adopte1Truc &mdash; Site de partage d'articles géolocalisés</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Site de partage d'articles géolocalisés" />
+	<meta name="keywords" content="site, recherche, articles, objets, Adopte1Truc, localisé, proche, chercher, trouver" />
+	<meta name="author" content="V.Pereira, M.Lapeyre, T.Rochette, B.Cauchard" />
+
+	<!--
+	//////////////////////////////////////////////////////
+
+	FREE HTML5 TEMPLATE
+	DESIGNED & DEVELOPED by FreeHTML5.co
+
+	Website: 		http://freehtml5.co/
+	Email: 			info@freehtml5.co
+	Twitter: 		http://twitter.com/fh5co
+	Facebook: 		https://www.facebook.com/fh5co
+
+	//////////////////////////////////////////////////////
+	 -->
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+
+	{% load static %}
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{%static 'appPrincipale/css/animate.css' %}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{%static 'appPrincipale/css/icomoon.css' %}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{%static 'appPrincipale/css/bootstrap.css' %}">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{%static 'appPrincipale/css/style.css' %}">
+
+	<!-- Modernizr JS -->
+	<script src="{%static 'appPrincipale/js/modernizr-2.6.2.min.js' %}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+
+	<div class="fh5co-loader"></div>
+
+	<div id="page">
+	<nav class="fh5co-nav" role="navigation">
+
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-5 text-right menu-1">
+					<ul>
+						<li><a href="/accueil/work">Tous les articles</a></li>
+						<li class="active"><a href="/accueil/about">Profil</a></li>
+						<li class="has-dropdown">
+							<a href="/accueil/services">Accueil</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-xs-2 text-center">
+					<div id="fh5co-logo"><a href="/accueil/index">UnTruc</a></div>
+				</div>
+				<div class="right-menu text-left menu-1">
+					<ul>
+						{% if request.user.is_authenticated %}
+								<li><a href="/accueil/logout/">Déconnexion</a></li>
+						{% else %}
+								<li><a href="/accueil/blog">Connexion</a></li>
+						{% endif %}
+						<li class="has-dropdown">
+							<a href="/accueil/inscription">Inscription</a>
+						</li>
+						<li><a href="/accueil/contact">Ajouter un article</a></li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</nav>
+
+	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/partage.jpg' %});">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc animate-box" data-animate-effect="fadeIn">
+							<h1>Ton profil</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div id="fh5co-about">
+		<div class="container">
+			<div class="about-content">
+				<div class="row animate-box">
+					<div class="col-md-6 col-md-push-6">
+						<div class="desc">
+							<h3>Histoire</h3>
+							<p>Ce site a été créé dans le cadre d'un projet de développement WEB.</p>
+							</div>
+						<div class="desc">
+							<h3>Mission &amp; Vision</h3>
+							<p>Le projet découle d'un besoin et d'une volonté de plus en plus mis en évidence de partager. Nous voulions créer une plateforme d'accés à l'économie participative permettant de trouver et de partager des biens et services.</p>
+							<p>L'objectif est que chacun puisse trouver ce qu'il cherche ou partagé ce qu'il veut à toute heures et de partout.</p>
+						</div>
+					</div>
+					<div class="col-md-6 col-md-pull-6">
+						<img class="img-responsive" src="{%static 'appPrincipale/images/Circles.png' %}" alt="about">
+					</div>
+
+				</div>
+			</div>
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<span>Productive Staff</span>
+					<h2>Notre Staff</h2>
+					<p>Groupe de travail ayant réaliser le site.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3 col-sm-3 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-staff">
+						<img src="{%static 'appPrincipale/images/Marian.jpg' %}" alt="Free HTML5 Templates by FreeHTML5.co">
+						<h3>Marian Lapeyre</h3>
+						<strong class="role">Chef de projet</strong>
+						<ul class="fh5co-social-icons">
+							<li><a href="https://github.com/mlapeyre73"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-3 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-staff">
+						<img src="{%static 'appPrincipale/images/Valentin.jpg' %}" alt="Free HTML5 Templates by FreeHTML5.co">
+						<h3>Valentin Pereira</h3>
+						<strong class="role"></strong>
+						<ul class="fh5co-social-icons">
+							<li><a href="https://github.com/ValiTox"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-3 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-staff">
+						<img src="{%static 'appPrincipale/images/Baptiste.jpg' %}" alt="Free HTML5 Templates by FreeHTML5.co">
+						<h3>Baptiste Cauchard</h3>
+						<strong class="role"></strong>
+						<ul class="fh5co-social-icons">
+							<li><a href="https://github.com/MrLeninstalock"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-3 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-staff">
+						<img src="{%static 'appPrincipale/images/Thomas.jpg' %}" alt="Free HTML5 Templates by FreeHTML5.co">
+						<h3>Thomas Rochette</h3>
+						<strong class="role"></strong>
+						<ul class="fh5co-social-icons">
+							<li><a href="https://github.com/ThomasRochette"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-md-5 col-md-push-1 animate-box">
+
+					<div class="fh5co-contact-info">
+						<h3><br>Contact Information</h3>
+						<ul>
+							<li class="address">6 Avenue des Arts, <br> INSA, Villeurbanne 69100 </li>
+							<li class="phone"><a href="">+033 616 468 526</a></li>
+							<li class="email"><a href="mailto:marian.lapeyre@insa-lyon.fr">marian.lapeyre@insa-lyon.fr</a></li>
+							<li class="url"><a href="http://FreeHTML5.co">FreeHTML5.co</a></li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="fh5co-started">
+		<div class="container">
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<h2>About</h2>
+					<p>Dans le cadre du projet nous avons choisi d'utiliser le framework Django car il fonctionne avec un pattern Modèle-Vue-Controlleur(MVC). Nous utilisons une base de données SQLite qui est implémenter dans le framework nous permettant de gérer les comptes utilisateurs ainsi que les biens et services disponibles.</p>
+					<p>Il est possible de créer un compte utilisateur permettant de publier et administrer des nouveaux biens ou services. Il y a une gestion des commentaires sur les articles pour lesquels il faut être connecté. Les atricles sont triés pour l'affichage par catégorie, code postal.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer id="fh5co-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
+					<ul class="fh5co-footer-links">
+						<li><a href="/accueil/apropos/">About us et contact</a></li>
+					</ul>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
+					<ul class="fh5co-footer-links">
+						<li><a href="/accueil/terms/">Terms, CGU</a></li>
+					</ul>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
+					<ul class="fh5co-footer-links">
+						<li><a href="/accueil/index/">Index</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="row copyright">
+				<div class="col-md-12 text-center">
+					<p>
+						<small class="block">&copy; 2017 Adopte1Truc. All Rights Reserved.</small>
+						<small class="block">Designed by V.Pereira, M.Lapeyre, B.Cauchard, T.Rochette</a></small>
+					</p>
+					<p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-linkedin"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+						</ul>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+
+	<!-- jQuery -->
+	<script src="{%static 'appPrincipale/js/jquery.min.js' %}"></script>
+	<!-- jQuery Easing -->
+	<script src="{%static 'appPrincipale/js/jquery.easing.1.3.js' %}"></script>
+	<!-- Bootstrap -->
+	<script src="{%static 'appPrincipale/js/bootstrap.min.js' %}"></script>
+	<!-- Waypoints -->
+	<script src="{%static 'appPrincipale/js/jquery.waypoints.min.js' %}"></script>
+	<!-- Main -->
+	<script src="{%static 'appPrincipale/js/main.js' %}"></script>
+
+	</body>
+</html>

@@ -11,12 +11,15 @@
 
 		{% if envoie %} Votre message a bien été enregistré
 		{% endif %}
-
+			{{objet_id}}
 			<form action="{% url "commenter_objet" %}" method="post">
 
 				{% csrf_token %}
 				{{form.as_p}}
+				<input type="hidden" name="objet_id" value={{objet_id}} />
 
+				<!--<input type="hidden" id="id_object_id" name="object_id" value=30 />
+				<input type="hidden" name="content_objet" value="0" />-->
 				<input type="submit" value="Envoyer"/>
 
 			</form>

@@ -61,42 +61,30 @@
 
 	<div id="page">
 	<nav class="fh5co-nav" role="navigation">
+
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-5 text-right menu-1">
 					<ul>
 						<li><a href="/accueil/work">Tous les articles</a></li>
-						<li><a href="/accueil/about">Profile</a></li>
+						<li><a href="/accueil/about">Profil</a></li>
 						<li class="has-dropdown">
 							<a href="/accueil/services">Accueil</a>
-							<ul class="dropdown">
-								<li><a href="#">Web Design</a></li>
-								<li><a href="#">eCommerce</a></li>
-								<li><a href="#">Branding</a></li>
-								<li><a href="#">API</a></li>
-							</ul>
 						</li>
 					</ul>
 				</div>
 				<div class="col-xs-2 text-center">
 					<div id="fh5co-logo"><a href="/accueil/index">UnTruc</a></div>
 				</div>
-				<div class="col-xs-5 text-left menu-1">
+				<div class="right-menu text-left menu-1">
 					<ul>
-						{% if nom == string.empty %}
+						{% if request.user.is_authenticated %}
+								<li><a href="/accueil/logout/">Déconnexion</a></li>
+						{% else %}
 								<li><a href="/accueil/blog">Connexion</a></li>
-						{% endif %}
-						{% if nom != string.empty %}
-								<li><a href="/accueil/blog">Déconnexion</a></li>
 						{% endif %}
 						<li class="has-dropdown">
 							<a href="/accueil/inscription">Inscription</a>
-							<ul class="dropdown">
-								<li><a href="#">HTML5</a></li>
-								<li><a href="#">CSS3</a></li>
-								<li><a href="#">Sass</a></li>
-								<li><a href="#">jQuery</a></li>
-							</ul>
 						</li>
 						<li class="active"><a href="/accueil/contact">Ajouter un article</a></li>
 					</ul>
@@ -106,7 +94,7 @@
 		</div>
 	</nav>
 
-	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/img_bg_2.jpg' %});">
+	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/partage.jpg' %});">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row">
@@ -119,15 +107,36 @@
 				</div>
 			</div>
 		</div>
+		<div id="endroit_chargement"></div>
 	</header>
 
+{% if request.user.is_authenticated %}
+{% if objet_false %}
+<div id="fh5co-services" class="fh5co-bg-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-sm-4">
+				<div class="feature-center animate-box" data-animate-effect="fadeIn">
+					<span class="icon">
+						<i class="icon-eye"></i>
+					</span>
+					<h3>Erreur à la création de l'article (champ manquant ou faux).</h3>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
 	<div id="fh5co-contact">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-5 col-md-push-1 animate-box">
 
 					<div class="fh5co-contact-info">
-						<form action="#">
+			 <form id="id" action="{% url "contact" %}" method="get">
+
+						{% csrf_token %}
 						<h3>Photo</h3>
 						<ul>
 							<li> Fichiers .jpg / .png / .gif (Max: 20Mo)</li>
@@ -168,7 +177,7 @@
 						<div class="row form-group">
 							<div class="col-md-12">
 								<!-- <label for="subject">Subject</label> -->
-								<input type="text" id="subject" class="form-control" placeholder="Titre de l'annonce">
+								<input type="text" id="id_nom" name"nom" class="form-control" placeholder="Titre de l'annonce">
 							</div>
 						</div>
 
@@ -181,14 +190,14 @@
 						<div class="row form-group">
 							<div class="col-md-12">
 								<!-- <label for="email">Email</label> -->
-								<input type="text" id="email" class="form-control" placeholder="Ville ou Code Postal">
+								<input type="text" id="id_code_postal" name="code_postal" class="form-control" placeholder="Code Postal">
 							</div>
 						</div>
-						<div class="row form-group">
+						<!--<div class="row form-group">
 							<div class="col-md-12">
-								<!-- <label for="email">Email</label> -->
+
 								<input type="text" id="phone" class="form-control" placeholder="Adresse">
-							</div>
+							</div>-->
 						</div>
 						<div class="form-group">
 							<input type="submit" value="Publier" class="btn btn-primary">
@@ -200,7 +209,6 @@
 
 		</div>
 	</div>
-
 	<div id="map" class="fh5co-map"></div>
 
 	<div id="fh5co-started">
@@ -223,70 +231,99 @@
 		</div>
 	</div>
 
-	<footer id="fh5co-footer" role="contentinfo">
-		<div class="container">
-			<div class="row row-pb-md">
-				<div class="col-md-2 col-sm-4 col-xs-6">
-					<ul class="fh5co-footer-links">
-						<li><a href="#">About</a></li>
-						<li><a href="#">Help</a></li>
-						<li><a href="#">Contact</a></li>
-						<li><a href="#">Terms</a></li>
-						<li><a href="#">Meetups</a></li>
-					</ul>
-				</div>
-
-				<div class="col-md-2 col-sm-4 col-xs-6">
-					<ul class="fh5co-footer-links">
-						<li><a href="#">Shop</a></li>
-						<li><a href="#">Privacy</a></li>
-						<li><a href="#">Testimonials</a></li>
-						<li><a href="#">Handbook</a></li>
-						<li><a href="#">Held Desk</a></li>
-					</ul>
-				</div>
-
-				<div class="col-md-2 col-sm-4 col-xs-6">
-					<ul class="fh5co-footer-links">
-						<li><a href="#">Find Designers</a></li>
-						<li><a href="#">Find Developers</a></li>
-						<li><a href="#">Teams</a></li>
-						<li><a href="#">Advertise</a></li>
-						<li><a href="#">API</a></li>
-					</ul>
-				</div>
-				<div class="col-md-4 col-sm-12 col-xs-12 fh5co-widget col-md-push-1">
-					<h3>A Little About Orange</h3>
-					<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
-					<p><a href="#">Learn More</a></p>
-				</div>
+{% else %}
+<div id="fh5co-started">
+	<div class="container">
+		<div class="row animate-box">
+			<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+				<h2>Vous devez être connecté pour ajouter une annonce!</h2>
+				<p>Connectez-vous ou inscrivez-vous pour avoir accès à toutes les options proposées par UnTruc.</p>
 			</div>
-
-			<div class="row copyright">
-				<div class="col-md-12 text-center">
-					<p>
-						<small class="block">&copy; 2017 Adopte1Truc. All Rights Reserved.</small>
-						<small class="block">Designed by V.Pereira, M.Lapeyre, B.Cauchard, T.Rochette</a></small>
-					</p>
-					<p>
-						<ul class="fh5co-social-icons">
-							<li><a href="#"><i class="icon-twitter"></i></a></li>
-							<li><a href="#"><i class="icon-facebook"></i></a></li>
-							<li><a href="#"><i class="icon-linkedin"></i></a></li>
-							<li><a href="#"><i class="icon-dribbble"></i></a></li>
-						</ul>
-					</p>
-				</div>
-			</div>
-
 		</div>
-	</footer>
+		<div class="row animate-box">
+			<div class="col-md-8 col-md-offset-2">
+				<form action="/accueil/blog" class="form-inline">
+					<div class="col-md-6 col-md-offset-3 col-sm-6">
+						<button type="submit" class="btn btn-default btn-block">Se connecter</button>
+					</div>
+				</form>
+				<form action="/accueil/inscription" class="form-inline">
+					<div class="col-md-6 col-md-offset-3 col-sm-6">
+						<button type="submit" class="btn btn-default btn-block">S'inscrire</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
+</div>
+{% endif %}
+
+
+<footer id="fh5co-footer" role="contentinfo">
+	<div class="container">
+		<div class="row row-pb-md">
+			<div class="col-md-4 col-sm-4 col-xs-0 text-center">
+				<ul class="fh5co-footer-links">
+					<li><a href="/accueil/apropos/">About us et contact</a></li>
+				</ul>
+			</div>
+			<div class="col-md-4 col-sm-4 col-xs-0 text-center">
+				<ul class="fh5co-footer-links">
+					<li><a href="/accueil/terms/">Terms, CGU</a></li>
+				</ul>
+			</div>
+			<div class="col-md-4 col-sm-4 col-xs-0 text-center">
+				<ul class="fh5co-footer-links">
+					<li><a href="/accueil/index/">Index</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="row copyright">
+			<div class="col-md-12 text-center">
+				<p>
+					<small class="block">&copy; 2017 Adopte1Truc. All Rights Reserved.</small>
+					<small class="block">Designed by V.Pereira, M.Lapeyre, B.Cauchard, T.Rochette</a></small>
+				</p>
+				<p>
+					<ul class="fh5co-social-icons">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook"></i></a></li>
+						<li><a href="#"><i class="icon-linkedin"></i></a></li>
+						<li><a href="#"><i class="icon-dribbble"></i></a></li>
+					</ul>
+				</p>
+			</div>
+		</div>
+
+	</div>
+</footer>
+</div>
 
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
 
+	<script>
+	var goToArticle = function() {
+		$('html, body').animate({scrollTop: $('#endroit_chargement').offset().top}, 2000);
+		};
+
+
+	 if(window.attachEvent) {
+		window.attachEvent('onload',goToArticle);
+	} else {
+		if(window.onload) {
+				var curronload = window.onload;
+				var newonload = function(evt) {
+						curronload(evt);
+						goToArticle(evt);
+				};
+				window.onload = newonload;
+		} else {
+				window.onload = goToArticle;
+		}
+	} </script>
 	<!-- jQuery -->
 	<script src="{%static 'appPrincipale/js/jquery.min.js' %}"></script>
 	<!-- jQuery Easing -->

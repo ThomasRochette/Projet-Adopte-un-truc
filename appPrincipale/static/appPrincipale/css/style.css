@@ -1345,7 +1345,7 @@ h1, h2, h3, h4, h5, h6, figure {
   padding-bottom: 2em !important;
 }
 
-/*.fh5co-loader {
+.fh5co-loader {
   position: fixed;
   left: 0px;
   top: 0px;
@@ -1353,7 +1353,7 @@ h1, h2, h3, h4, h5, h6, figure {
   height: 100%;
   z-index: 9999;
   background: url(../images/loader.gif) center no-repeat #fff;
-}*/
+}
 
 .js .animate-box {
   opacity: 0;
@@ -1471,3 +1471,32 @@ h1, h2, h3, h4, h5, h6, figure {
     }
 }
 /*# sourceMappingURL=style.css.map */
+
+.nom_login{
+	font-size: .625em;
+	font-style: normal;	
+	color: white;
+	margin-top: 0px;
+	margin-right: 5px;
+	font-weight: 200;
+}
+
+.wrong_connect{
+	font-weight: 200;
+	font-style: italic;
+	color: red;
+	font-family: "Playfair Display", Arial, serif;
+}
+
+.no_account{
+	font-weight: 200;
+	font-style: italic;
+	color:  #F36363;
+	font-family: "Playfair Display", Arial, serif;
+}
+
+.art_popup{
+	font-family: "Work Sans", Arial, sans-serif;
+	text-transform: uppercase;
+	font-weight: 500;
+	}

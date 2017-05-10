@@ -61,42 +61,30 @@
 
 	<div id="page">
 	<nav class="fh5co-nav" role="navigation">
+
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-5 text-right menu-1">
 					<ul>
 						<li><a href="/accueil/work">Tous les articles</a></li>
-						<li><a href="/accueil/about">Profile</a></li>
-						<li class="has-dropdown active">
+						<li><a href="/accueil/about">Profil</a></li>
+						<li class="has-dropdown">
 							<a href="/accueil/services">Accueil</a>
-							<ul class="dropdown">
-								<li><a href="#">Web Design</a></li>
-								<li><a href="#">eCommerce</a></li>
-								<li><a href="#">Branding</a></li>
-								<li><a href="#">API</a></li>
-							</ul>
 						</li>
 					</ul>
 				</div>
 				<div class="col-xs-2 text-center">
 					<div id="fh5co-logo"><a href="/accueil/index">UnTruc</a></div>
 				</div>
-				<div class="col-xs-5 text-left menu-1">
+				<div class="right-menu text-left menu-1">
 					<ul>
-						{% if nom == string.empty %}
+						{% if request.user.is_authenticated %}
+								<li><a href="/accueil/logout/">Déconnexion</a></li>
+						{% else %}
 								<li><a href="/accueil/blog">Connexion</a></li>
-						{% endif %}
-						{% if nom != string.empty %}
-								<li><a href="/accueil/blog">Déconnexion</a></li>
 						{% endif %}
 						<li class="has-dropdown">
 							<a href="/accueil/inscription">Inscription</a>
-							<ul class="dropdown">
-								<li><a href="#">HTML5</a></li>
-								<li><a href="#">CSS3</a></li>
-								<li><a href="#">Sass</a></li>
-								<li><a href="#">jQuery</a></li>
-							</ul>
 						</li>
 						<li><a href="/accueil/contact">Ajouter un article</a></li>
 					</ul>
@@ -106,84 +94,112 @@
 		</div>
 	</nav>
 
-	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/img_bg_2.jpg' %});">
+	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/partage.jpg' %});">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Our Services</h1>
-							<h2>Free html5 templates Made by <a href="http://freehtml5.co" target="_blank">freehtml5.co</a></h2>
+							<h1>Consulter une annonce</h1>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
+	{% if envoie %}
+		<div id="fh5co-services" class="fh5co-bg-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-4">
+						<div class="feature-center animate-box" data-animate-effect="fadeIn">
+							<span class="icon">
+								<i class="icon-eye"></i>
+							</span>
+							<h3>Votre commentaire a bien été ajouté!</h3>
 
-	<div id="fh5co-services" class="fh5co-bg-section">
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+	{% endif %}
+	<div id="fh5co-about">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-4 col-sm-4">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<span class="icon">
-							<i class="icon-eye"></i>
-						</span>
-						<h3>Retina Ready</h3>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<span class="icon">
-							<i class="icon-command"></i>
-						</span>
-						<h3>Fully Responsive</h3>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<span class="icon">
-							<i class="icon-mouse"></i>
-						</span>
-						<h3>Web Starter</h3>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<span class="icon">
-							<i class="icon-publish"></i>
-						</span>
-						<h3>Retina Ready</h3>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<span class="icon">
-							<i class="icon-shield"></i>
-						</span>
-						<h3>Fully Responsive</h3>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<span class="icon">
-							<i class="icon-suitcase"></i>
-						</span>
-						<h3>Web Starter</h3>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-					</div>
+			<div class="about-content">
+				<div class="row animate-box">
+					<div class="col-md-6 col-md-push-6">
+
+
+
+
+						<div class="desc">
+							<h3 class="art_popup"> {{objet.nom}}</h3>
+							<p>{{objet.description}}</p>
+						</div>
+
+						{% if peut_commenter %}
+							 <form id="id" action="{% url "commentaire" %}" method="get">
+								{% csrf_token %}
+								<input type="hidden" name="objet_id" value={{objet.id}} />
+								<button type="submit" class="btn btn-primary">Laisser un commentaire</button>
+							</form>
+						{% endif %}
+						{% if peut_supprimer %}
+							 <form id="id" action="{% url "about" %}" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="objet_id" value={{objet.id}} />
+								<button type="submit" class="btn btn-primary">Supprimer l'article</button>
+							</form>
+						{% endif %}
+
+						<div class="desc">
+							<p>Article publié par {{objet.user.first_name}} {{objet.user.last_name}}</p>
+							<p>mail : {{objet.user.email}}</p>
+						</div>
+							<div class="col-md-6 col-md-pull-6">
+								<img class="img-responsive" src="{{objet_image}}" alt="about">
+							</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<div id="fh5co-testimonial" style="background-image:url({%static 'appPrincipale/images/fond_comment.jpg' %});">
+		<div class="overlay"></div>
+		<div class="row animate-box">
+			<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+				<h2>Commentaires liés à cet article</h2>
+			</div>
+		</div>
+		<div class="container">
+			{% for commentraire in commentaires %}
 
+			<div class="row">
+				<form id="id" action="{% url "supprimer_commentaire" %}" method="post">
+					{% csrf_token %}
+				<div class="col-md-4" >
+					<div class="comment">
+					<div class="box-testimony animate-box">
+						<input type="hidden" name="objet_id" value="{{objet_id}}"/>
+						<input type="hidden" name="commentaire_id" value="{{commentraire.id}}"/>
+						<blockquote>
+							<span class="quote"><span><i class="icon-quote"></i></span></span>
+							<p>&ldquo;{{commentraire.contenu}}&rdquo;</p>
+						</blockquote>
+						<p class="author" >{{commentraire.titre}}</p>
+						<button type="submit" class="btn btn-primary">Supprimer</button>
+					</div>
+				</div>
+				</div>
+			</form>
+
+			</div>
+			{% endfor %}
+		</div>
+
+	</div>
 	<div id="fh5co-started">
 		<div class="container">
 			<div class="row animate-box">
@@ -207,39 +223,20 @@
 	<footer id="fh5co-footer" role="contentinfo">
 		<div class="container">
 			<div class="row row-pb-md">
-				<div class="col-md-2 col-sm-4 col-xs-6">
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
 					<ul class="fh5co-footer-links">
-						<li><a href="#">About</a></li>
-						<li><a href="#">Help</a></li>
-						<li><a href="#">Contact</a></li>
-						<li><a href="#">Terms</a></li>
-						<li><a href="#">Meetups</a></li>
+						<li><a href="/accueil/apropos/">About us et contact</a></li>
 					</ul>
 				</div>
-
-				<div class="col-md-2 col-sm-4 col-xs-6">
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
 					<ul class="fh5co-footer-links">
-						<li><a href="#">Shop</a></li>
-						<li><a href="#">Privacy</a></li>
-						<li><a href="#">Testimonials</a></li>
-						<li><a href="#">Handbook</a></li>
-						<li><a href="#">Held Desk</a></li>
+						<li><a href="/accueil/terms/">Terms, CGU</a></li>
 					</ul>
 				</div>
-
-				<div class="col-md-2 col-sm-4 col-xs-6">
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
 					<ul class="fh5co-footer-links">
-						<li><a href="#">Find Designers</a></li>
-						<li><a href="#">Find Developers</a></li>
-						<li><a href="#">Teams</a></li>
-						<li><a href="#">Advertise</a></li>
-						<li><a href="#">API</a></li>
+						<li><a href="/accueil/index/">Index</a></li>
 					</ul>
-				</div>
-				<div class="col-md-4 col-sm-12 col-xs-12 fh5co-widget col-md-push-1">
-					<h3>A Little About Orange</h3>
-					<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
-					<p><a href="#">Learn More</a></p>
 				</div>
 			</div>
 

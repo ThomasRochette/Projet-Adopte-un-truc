@@ -61,42 +61,30 @@
 
 	<div id="page">
 	<nav class="fh5co-nav" role="navigation">
+
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-5 text-right menu-1">
 					<ul>
 						<li><a href="/accueil/work">Tous les articles</a></li>
-						<li class="active"><a href="/accueil/about">Profile</a></li>
+						<li class="active"><a href="/accueil/about">Profil</a></li>
 						<li class="has-dropdown">
 							<a href="/accueil/services">Accueil</a>
-							<ul class="dropdown">
-								<li><a href="#">Web Design</a></li>
-								<li><a href="#">eCommerce</a></li>
-								<li><a href="#">Branding</a></li>
-								<li><a href="#">API</a></li>
-							</ul>
 						</li>
 					</ul>
 				</div>
 				<div class="col-xs-2 text-center">
 					<div id="fh5co-logo"><a href="/accueil/index">UnTruc</a></div>
 				</div>
-				<div class="col-xs-5 text-left menu-1">
+				<div class="right-menu text-left menu-1">
 					<ul>
-						{% if nom == string.empty %}
+						{% if request.user.is_authenticated %}
+								<li><a href="/accueil/logout/">Déconnexion</a></li>
+						{% else %}
 								<li><a href="/accueil/blog">Connexion</a></li>
-						{% endif %}
-						{% if nom != string.empty %}
-								<li><a href="/accueil/blog">Déconnexion</a></li>
 						{% endif %}
 						<li class="has-dropdown">
 							<a href="/accueil/inscription">Inscription</a>
-							<ul class="dropdown">
-								<li><a href="#">HTML5</a></li>
-								<li><a href="#">CSS3</a></li>
-								<li><a href="#">Sass</a></li>
-								<li><a href="#">jQuery</a></li>
-							</ul>
 						</li>
 						<li><a href="/accueil/contact">Ajouter un article</a></li>
 					</ul>
@@ -106,20 +94,57 @@
 		</div>
 	</nav>
 
-	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/img_bg_2.jpg' %});">
+	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/partage.jpg' %});">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Ton profile</h1>
+							<h1>Ton profil</h1>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
+
+
+	<div style="overflow: auto" id="fh5co-project">
+		<div class="container">
+			<div class="row">
+				{%if not objets %}
+					<h3 class="wrong_connect">Vous ne possédez aucun article.</h3>
+				{% else %}
+				{% for objet in objets %}
+				<form action="{% url "article" %}" method="post">
+					{% csrf_token %}
+					<div class="col-lg-4 col-md-4">
+						<div class="fh5co-blog animate-box">
+
+							<input type="hidden" name="objet_id" value="{{objet.id}}"/>
+							<!--<input type="hidden" name="article_nom" value="{{objet.nom}}"/>
+							<input type="hidden" name="article_description" value="{{objet.description}}"/>
+							<input type="hidden" name="article_categorie" value="{{objet.categorie}}"/>-->
+							<input type="hidden" name="objet_image" value="{%static 'appPrincipale/images/work-4.jpg' %}"/>
+							<input type="image" class="img-responsive" src="{%static 'appPrincipale/images/work-4.jpg' %}" alt="Submit"/>
+							<div class="blog-text">
+								<h3><a href="/accueil/article">{{objet.nom}}</a></h3>
+								<span class="posted_on">{{objet.categorie}}</span>
+								<span class="comment"><a href=""><i class="icon-speech-bubble"></i></a></span>
+								<p>{{objet.description|truncatewords:20}}</p>
+								<button type="submit" class="btn btn-primary">En savoir plus</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+
 
 	<div id="fh5co-about">
 		<div class="container">
@@ -220,39 +245,20 @@
 	<footer id="fh5co-footer" role="contentinfo">
 		<div class="container">
 			<div class="row row-pb-md">
-				<div class="col-md-2 col-sm-4 col-xs-6">
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
 					<ul class="fh5co-footer-links">
-						<li><a href="#">About</a></li>
-						<li><a href="#">Help</a></li>
-						<li><a href="#">Contact</a></li>
-						<li><a href="#">Terms</a></li>
-						<li><a href="#">Meetups</a></li>
+						<li><a href="/accueil/apropos/">About us et contact</a></li>
 					</ul>
 				</div>
-
-				<div class="col-md-2 col-sm-4 col-xs-6">
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
 					<ul class="fh5co-footer-links">
-						<li><a href="#">Shop</a></li>
-						<li><a href="#">Privacy</a></li>
-						<li><a href="#">Testimonials</a></li>
-						<li><a href="#">Handbook</a></li>
-						<li><a href="#">Held Desk</a></li>
+						<li><a href="/accueil/terms/">Terms, CGU</a></li>
 					</ul>
 				</div>
-
-				<div class="col-md-2 col-sm-4 col-xs-6">
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
 					<ul class="fh5co-footer-links">
-						<li><a href="#">Find Designers</a></li>
-						<li><a href="#">Find Developers</a></li>
-						<li><a href="#">Teams</a></li>
-						<li><a href="#">Advertise</a></li>
-						<li><a href="#">API</a></li>
+						<li><a href="/accueil/index/">Index</a></li>
 					</ul>
-				</div>
-				<div class="col-md-4 col-sm-12 col-xs-12 fh5co-widget col-md-push-1">
-					<h3>A Little About Orange</h3>
-					<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
-					<p><a href="#">Learn More</a></p>
 				</div>
 			</div>
 
