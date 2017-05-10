@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Titre</title>
+
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'appPrincipale/voirObjet.css' %}">
+    </head>
+
+    <body>
+
+				{% for objet in objets %}
+        <h1> {{objets.id}}</h1>
+        <div id='box_object'>
+
+					<div id='box_img'>
+						<h2>{{ object.image }}</h2>
+						<img src="{{ object.image.url}}" alt="mon image"/>
+					</div>
+
+					<div id='box_txt'>
+						<h2>{{ objet.categorie }}</h2>
+						<h2>{{ objet.nom }}</h2>
+						<h2>{{ objet.description|truncatewords:10 }}</h2>
+						<h2>{{ objet.id}}</h2>
+					</div>
+
+        <form id="id" action="{% url "afficher_objet" %}" method="get">
+  			{% csrf_token %}
+  				<input type="hidden" name="return_objet" value={{objet.id}} />
+  				<input type="submit" value="Afficher"/>
+  			</form>
+
+				<form id="id" action="{% url "supprimer_objet" %}" method="post">
+				{% csrf_token %}
+					<input type="hidden" name="return_objet" value={{objet.id}} />
+					<input type="submit" value="Supprimer"/>
+				</form>
+
+				<form id="id" action="{% url "ajouter_un_objet" %}" method="get">
+				{% csrf_token %}
+					<input type="hidden" name="return_objet" value={{objet.id}} />
+					<input type="submit" value="modifier"/>
+				</form>
+
+        <form id="id" action="{% url "commenter_objet" %}" method="get">
+				{% csrf_token %}
+					<input type="hidden" name="return_objet" value={{objet.id}} />
+					<input type="submit" value="Commenter"/>
+				</form>
+				</div>
+				{% endfor %}
+				
+				
+				{% for commentaire in commentaires %}
+        <h1> {{commentaire.id}}</h1>
+        <div id='box_object'>
+
+					
+
+					<div id='box_txt'>
+						<h2>{{ commentaire.contenu}}</h2>
+						
+					</div>
+
+        
+
+				
+				</div>
+				{% endfor %}
+				
+
+
+
+    </body>
+</html>
