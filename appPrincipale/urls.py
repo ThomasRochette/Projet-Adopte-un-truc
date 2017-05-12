@@ -15,11 +15,7 @@ urlpatterns = [
 	url(r'^work/$', views.new_work, name='work'),
 	url(r'^services/$', views.new_services, name='services'),
 	url(r'^article/$', views.new_article, name='article'),
-	url(r'^lire/$',views.lire, name='lire'),
-	url(r'^ajouter_un_objet$', views.VOIRFormulaire, name='ajouter_un_objet'),
-	url(r'^supprimer_objet/$',views.supprimer_objet, name='supprimer_objet'),
-	url(r'^tout_supprimer/$',views.TOUTsupprimer, name='tout_supprimer'),
-	url(r'^commenter_objet/$',views.formulaire_commentaire, name='commenter_objet'),
+	
 	url(r'^supprimer_commentaire/$', views.supprimer_commentaire, name='supprimer_commentaire'),
 	url(r'^login/$', auth_views.login, name='login'),
 	url(r'^logout/$', auth_views.logout, {'next_page': '/accueil/index'}, name='logout'),
@@ -27,6 +23,8 @@ urlpatterns = [
 	url(r'^inscription/$', views.signup, name='inscription'),
 	url(r'^apropos/$', views.apropos, name='apropos'),
 	url(r'^terms/$', views.terms, name='terms'),
+	
+	
 
 
 

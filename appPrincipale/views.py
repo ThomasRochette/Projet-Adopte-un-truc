@@ -18,6 +18,9 @@ from django.core.files import File
 # Create your views here.
 #voir MonObjet et les images
 
+def test_generique(request):
+	return render(request,'appPrincipale/test_vu_generique.html')
+
 def new_blog(request):
     error = False
     categories = Categorie.objects.all()
@@ -42,13 +45,14 @@ def new_blog(request):
     return render(request, 'appPrincipale/blog.html', locals())
 
 def new_about(request):
-    nom = request.user.username
+    nom=request.user.username
     print(request.user.id)
-    objets=Objet.objects.filter(user=request.user)
+    
 
     #si je recois un post ca veut dire que j'ai recu une demande pour supprimer un objet
     if request.method=="POST":
         print("recu post")
+        objets=Objet.objects.filter(user=request.user)
         objet_id=request.POST.get("objet_id")
         print(objet_id)
         objet=Objet.objects.get(id=objet_id)
@@ -192,46 +196,8 @@ def logout_view(request):
 
 
 
-def lire(request):
-    monobjet = Objet.objects.all()
-    return render(request, 'appPrincipale/lire.html', {'objets': monobjet})
 
 
-def VOIRFormulaire(request) :
-
-	if request.method=="GET" :
-		monid=request.GET.get("return_objet","0");
-		for article in Objet.objects.filter(id=monid):
-			form=ObjetForm(instance=article)
-			modifie=True
-			objetID=article.id
-
-	if request.method=="POST" :
-		monid=request.POST.get("return_objet","0");
-		#if monid != "0" :
-			#for article in Objet.objects.filter(id=monid):
-			#		nom=article.nom
-			#form=ObjetForm(request.POST, instance=article)
-		#else :
-		#	form=ObjetForm(request.POST or None)
-
-		#if form.is_valid():
-		#	form.save()
-		#	envoie=True
-
-	return render(request , 'appPrincipale/voirFormulaire.html', locals())
-
-def supprimer_objet(request):
-	if request.method=="POST" :
-		monid=request.POST.get("return_objet","0");
-		for article in Objet.objects.filter(id=monid):
-			article.delete();
-	return redirect(lire)
-
-def TOUTsupprimer(request) :
-	for article in Objet.objects.all():
-			article.delete();
-	return redirect(lire)
 
 
 def new_commentaire(request):
@@ -285,39 +251,11 @@ def supprimer_commentaire(request):
 
 
 
-def formulaire_commentaire(request):
-    form=ComentaireForm(request.POST or None)
-    object_id=0
-    if request.method=="GET":
-        objet_id=request.GET.get("objet_id","-1")
-        print(objet_id)
 
-    if request.method=="POST":
-        objet_id=request.POST.get("objet_id","-1")
-        initial_content_type=request.GET.get("initial_content_type","-1")
-
-    if form.is_valid() :
-
-        comentaire=form.save(commit=False)
-
-
-        objet=Objet.objects.get(id=objet_id)
-        comentaire.content_object=objet
-
-        comentaire.object_id=objet_id
-
-        comentaire.save()
-        envoie=True
-        return redirect(lire)
-    return render(request , 'appPrincipale/voirFormulaire_commentaire.html', locals())
 
 def apropos(request):
     return render(request , 'appPrincipale/apropos.html', locals())
 
 def terms(request):
     return render(request , 'appPrincipale/terms.html', locals())
-#def afficher_objet(request):
- #   monid=request.GET.get("return_objet","0");
-  #  objets= Objet.objects.filter(id=monid);
-   # commentaires=Comentaire.objects.filter(object_id=monid)
-    #return render(request , 'appPrincipale/objet.html',locals())
+
