@@ -42,6 +42,7 @@
 						<div class="desc">
 							<h3 class="art_popup"> {{objet.nom}}</h3>
 							<p>{{objet.description}}</p>
+							<p>{{objet.code_postal}}, {{objet.adresse}}</P>
 						</div>
 
 						{% if peut_commenter %}
@@ -91,7 +92,9 @@
 						<input type="hidden" name="commentaire_id" value="{{commentraire.id}}"/>
 						<blockquote>
 							<span class="quote"><span><i class="icon-quote"></i></span></span>
+							<p></p>
 							<p>&ldquo;{{commentraire.contenu}}&rdquo;</p>
+							<p><strong>    {{commentraire.user.username}}</strong></p>
 						</blockquote>
 						<p class="author" >{{commentraire.titre}}</p>
 						<button type="submit" class="btn btn-primary">Supprimer</button>

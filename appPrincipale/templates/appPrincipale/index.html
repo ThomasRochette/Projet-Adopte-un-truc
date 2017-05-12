@@ -1,1 +1,40 @@
 {% extends "base.html" %}
+
+{% block load_static %}
+	{% load static %}
+	{% endblock %}
+	
+
+{% block fh5co-projet %}
+	<div style="overflow: auto" id="fh5co-project">
+		<div class="container">
+			<div class="row">
+				{%if not objets %}
+					<h3 class="wrong_connect">Aucun article ne correspond à vos recherches.</h3>
+				{% else %}
+				{% for objet in objets %}
+				<form action="{% url "article" %}" method="post">
+					{% csrf_token %}
+					<div class="col-lg-4 col-md-4">
+						<div class="fh5co-blog animate-box">
+
+							<input type="hidden" name="objet_id" value="{{objet.id}}"/>
+							
+							<input type="hidden" name="objet_image" value="{%static 'appPrincipale/images/work-4.jpg' %}"/>
+							<input type="image" class="img-responsive" src="{%static 'appPrincipale/images/work-4.jpg' %}" alt="Submit"/>
+							<div class="blog-text">
+								<h3><a href="/accueil/article">{{objet.nom}}</a></h3>
+								<span class="posted_on">{{objet.categorie}}</span>
+								<span class="comment"><a href=""><i class="icon-speech-bubble"></i></a></span>
+								<p>{{objet.description|truncatewords:20}}</p>
+								<button type="submit" class="btn btn-primary">En savoir plus</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
