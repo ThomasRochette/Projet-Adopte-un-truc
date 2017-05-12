@@ -14,6 +14,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.core.files import File
 
+gros_mon=["putain","merde","chier","enculer","batard","salaud","salope","pute","connard","connasse","con","bite"]
 
 # Create your views here.
 #voir MonObjet et les images
@@ -60,41 +61,59 @@ def new_about(request):
     return render(request, 'appPrincipale/about.html',locals())
 
 def new_contact(request):
-    categories = Categorie.objects.all()
-    objets = Objet.objects.all()
-    nom = request.user.username
-    code_false=False
-    objet_false=False
-    objet_cree=False
-    if request.method=="POST":
-        print(request.POST)
-        form=ObjetForm(request.POST, request.FILES)
-        print("MA FORM: ", form, "*********************")
-        if form.is_valid():
-            print("test forme est valide")
-            code_postal=request.POST.get("code_postal")
-            photo=request.POST.get("photo")
-            print(photo)
-            try:
-                print("try")
-                int(code_postal)
-                if len(code_postal)==5:
-                    objet=form.save(commit=False)
-                    objet.user=request.user
-                    print(objet.photo)
-                    objet.save()
-                    objet_cree=True
-                    return render(request, 'appPrincipale/index.html', locals())
-                else:
-                    code_false=True
-            except ValueError:
-                code_false=True
-                print("c'est pas un int")
-                return render(request, 'appPrincipale/new_objet.html',locals())
-        else:
-            print("form pas valid")
-            objet_false=True
-    return render(request, 'appPrincipale/new_objet.html',locals())
+	categories = Categorie.objects.all()
+	objets = Objet.objects.all()
+	nom = request.user.username
+	code_false=False
+	objet_false=False
+	objet_cree=False
+	if request.method=="POST":
+		print(request.POST)
+		form=ObjetForm(request.POST, request.FILES)
+		print("MA FORM: ", form, "*********************")
+		if form.is_valid():
+			print("test forme est valide")
+
+
+			Nom=form.cleaned_data['nom']
+			Description=form.cleaned_data['description']
+
+			bol_vulgaire=False			
+			description=Description.lower()
+			for word in gros_mon :
+
+				if word in description:
+					bol_vulgaire=True
+					return render(request, 'appPrincipale/commentaire.html', locals())
+			nom=Nom.lower()
+			for word in gros_mon :
+				if word in nom:
+					bol_vulgaire=True
+					return render(request, 'appPrincipale/commentaire.html', locals())
+
+			code_postal=request.POST.get("code_postal")
+			photo=request.POST.get("photo")
+			print(photo)
+			try:
+				print("try")
+				int(code_postal)
+				if len(code_postal)==5:
+					objet=form.save(commit=False)
+					objet.user=request.user
+					print(objet.photo)
+					objet.save()
+					objet_cree=True
+					return render(request, 'appPrincipale/index.html', locals())
+				else:
+					code_false=True
+			except ValueError:
+				code_false=True
+				print("c'est pas un int")
+				return render(request, 'appPrincipale/new_objet.html',locals())
+		else:
+			print("form pas valid")
+			objet_false=True
+	return render(request, 'appPrincipale/new_objet.html',locals())
 
 def new_index(request):
     nom=request.user.username
@@ -216,19 +235,39 @@ def new_commentaire(request):
 		objet_id=request.POST.get("objet_id","-1")
 		print(objet_id)
 		if form.is_valid():
-			comentaire=form.save(commit=False)
+			print("form valide")
+			Titre=form.cleaned_data['titre']
+			Contenu=form.cleaned_data['contenu']
+			
+			bol_vulgaire=False			
+			contenu=Contenu.lower()
+			for word in gros_mon :
+				
+				if word in contenu:
+					bol_vulgaire=True
+					return render(request, 'appPrincipale/commentaire.html', locals())
+			titre=Titre.lower()
+			for word in gros_mon :
+				if word in titre:
+					bol_vulgaire=True
+					return render(request, 'appPrincipale/commentaire.html', locals())
+			
+			if bol_vulgaire :
+				rien=False
+			else :
+				comentaire=form.save(commit=False)
 
-			objet=Objet.objects.get(id=objet_id)
+				objet=Objet.objects.get(id=objet_id)
 
-			comentaire.content_object=objet
-			comentaire.object_id=objet_id
+				comentaire.content_object=objet
+				comentaire.object_id=objet_id
 
-			comentaire.save()
-			envoie=True
-			article_id=objet_id
-			article=objet
-			commentaires=Comentaire.objects.all()
-			return render(request, 'appPrincipale/services.html', locals())
+				comentaire.save()
+				envoie=True
+				article_id=objet_id
+				article=objet
+				commentaires=Comentaire.objects.all()
+				return render(request, 'appPrincipale/services.html', locals())
 	return render(request, 'appPrincipale/commentaire.html', locals())
 
 

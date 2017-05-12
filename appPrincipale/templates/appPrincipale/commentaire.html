@@ -7,12 +7,32 @@
 
 
 {% block top %}
-							<h1>Déposer une annonce</h1>
+							<h1>Déposer un commentaire </h1>
 {% endblock %}
 
 
 {% block corps %}
 		{% if request.user.is_authenticated %}
+		
+		
+			{% if bol_vulgaire %}
+					<div id="fh5co-services" class="fh5co-bg-section">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-4 col-sm-4">
+									<div class="feature-center animate-box" data-animate-effect="fadeIn">
+										<span class="icon">
+											<i class="icon-eye"></i>
+										</span>
+										<h3>Restez poli s'il vous plait</h3>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				{% endif %}
 			<div id="fh5co-contact">
 				<div class="container">
 					<div class="row">
