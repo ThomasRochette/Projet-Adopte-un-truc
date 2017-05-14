@@ -24,6 +24,7 @@ gros_mon=["putain","merde","chier","enculer","batard","salaud","salope","pute","
 def test_generique(request):
 	return render(request,'appPrincipale/test_vu_generique.html')
 
+
 def new_blog(request):
     error = False
     categories = Categorie.objects.all()
@@ -47,75 +48,86 @@ def new_blog(request):
         form = ConnexionForm()
     return render(request, 'appPrincipale/blog.html', locals())
 
+#affiche le profil du gars
 def new_about(request):
     nom=request.user.username
-    print(request.user.id)
-    objets=Objet.objects.filter(user=request.user)
-    #si je recois un post ca veut dire que j'ai recu une demande pour supprimer un objet
-    if request.method=="POST":
-        print("recu post")
-        objets=Objet.objects.filter(user=request.user)
-        objet_id=request.POST.get("objet_id")
-        print(objet_id)
-        objet=Objet.objects.get(id=objet_id)
-        objet.delete()
-    return render(request, 'appPrincipale/about.html',locals())
-
+    if(nom != ''):    
+		user=request.user
+		objets=Objet.objects.filter(user=request.user)
+		
+		#si je recois un post ca veut dire que j'ai recu une demande pour supprimer un objet
+		if request.method=="POST":
+			print("recu post")
+			objets=Objet.objects.filter(user=request.user)
+			objet_id=request.POST.get("objet_id")
+			print(objet_id)
+			objet=Objet.objects.get(id=objet_id)
+			objet.delete()
+		return render(request, 'appPrincipale/about.html',locals())
+    else:
+        return redirect(se_connecter)
+#ajouter un nouvel objet
 def new_contact(request):
-	categories = Categorie.objects.all()
-	objets = Objet.objects.all()
-	nom = request.user.username
-	code_false=False
-	objet_false=False
-	objet_cree=False
-	if request.method=="POST":
-		print(request.POST)
-		form=ObjetForm(request.POST, request.FILES)
-		print("MA FORM: ", form, "*********************")
-		if form.is_valid():
-			print("test forme est valide")
+    nom = request.user.username
+    if(nom != ''):
+		
+		categories = Categorie.objects.all()
+		objets = Objet.objects.all()
+		nom = request.user.username
+		code_false=False
+		objet_false=False
+		objet_cree=False
+		if request.method=="POST":
+			print(request.POST)
+			form=ObjetForm(request.POST, request.FILES)
+			print("MA FORM: ", form, "*********************")
+			if form.is_valid():
+				print("test forme est valide")
 
 
-			Nom=form.cleaned_data['nom']
-			Description=form.cleaned_data['description']
+				Nom=form.cleaned_data['nom']
+				Description=form.cleaned_data['description']
 
-			bol_vulgaire=False			
-			description=Description.lower()
-			for word in gros_mon :
+				bol_vulgaire=False			
+				description=Description.lower()
+				for word in gros_mon :
 
-				if word in description:
-					bol_vulgaire=True
-					return render(request, 'appPrincipale/commentaire.html', locals())
-			nom=Nom.lower()
-			for word in gros_mon :
-				if word in nom:
-					bol_vulgaire=True
-					return render(request, 'appPrincipale/commentaire.html', locals())
+					if word in description:
+						bol_vulgaire=True
+						return render(request, 'appPrincipale/commentaire.html', locals())
+				nom=Nom.lower()
+				for word in gros_mon :
+					if word in nom:
+						bol_vulgaire=True
+						return render(request, 'appPrincipale/commentaire.html', locals())
 
-			code_postal=request.POST.get("code_postal")
-			photo=request.POST.get("photo")
-			print(photo)
-			try:
-				print("try")
-				int(code_postal)
-				if len(code_postal)==5:
-					objet=form.save(commit=False)
-					objet.user=request.user
-					print(objet.photo)
-					objet.save()
-					objet_cree=True
-					return render(request, 'appPrincipale/index.html', locals())
-				else:
+				code_postal=request.POST.get("code_postal")
+				photo=request.POST.get("photo")
+				print(photo)
+				try:
+					print("try")
+					int(code_postal)
+					if len(code_postal)==5:
+						objet=form.save(commit=False)
+						objet.user=request.user
+						print(objet.photo)
+						objet.save()
+						objet_cree=True
+						return render(request, 'appPrincipale/index.html', locals())
+					else:
+						code_false=True
+				except ValueError:
 					code_false=True
-			except ValueError:
-				code_false=True
-				print("c'est pas un int")
-				return render(request, 'appPrincipale/new_objet.html',locals())
-		else:
-			print("form pas valid")
-			objet_false=True
-	return render(request, 'appPrincipale/new_objet.html',locals())
-
+					print("c'est pas un int")
+					return render(request, 'appPrincipale/new_objet.html',locals())
+			else:
+				print("form pas valid")
+				objet_false=True
+		return render(request, 'appPrincipale/new_objet.html',locals())
+		
+    else:
+        return redirect(se_connecter)
+        
 def new_index(request):
     nom=request.user.username
     categories = Categorie.objects.all()
@@ -130,8 +142,10 @@ def new_services(request):
 
 #affiche l'article avec les commentaireq
 def new_article(request):
-    user=request.user
+
     nom = request.user.username
+  
+    user=request.user   
     categories = Categorie.objects.all()
     objets = Objet.objects.all()
     peut_commenter=True
@@ -185,12 +199,18 @@ def new_work(request):
             objets = Objet.objects.all()
     return render(request, 'appPrincipale/work.html', locals())
 
+#formulaire d'inscription
 def signup(request):
+
     nom = request.user.username
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            USER_buffer=form.save(commit=False)
+            #
+            #faire le truc avec le USER_buffer
+            #
+            #
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
@@ -200,12 +220,24 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'appPrincipale/inscription.html', {'form': form})
 
-def profile(request):
-    nom = request.user.username
-    if(nom != ''):
-        return render(request, 'appPrincipale/profile.html', locals())
-    else:
-        return redirect('/accueil/login')
+
+def modifier_profil(request):
+	nom=request.user.username
+	if(nom != ''):
+		form = SignUpForm(instance=request.user)
+		if request.method == 'POST':
+			print(request.POST)
+			if form.is_valid():
+				form.save()
+				username = form.cleaned_data.get('username')
+				raw_password = form.cleaned_data.get('password1')
+				user = authenticate(username=username, password=raw_password)
+				login(request, user)
+				return redirect('index')
+			print("pas valide")
+		return render(request, 'appPrincipale/modifier_profil.html', {'form': form})
+	else:
+		return redirect(se_connecter)		
 
 def logout_view(request):
 
@@ -215,88 +247,156 @@ def logout_view(request):
     return redirect(new_index)
 
 
-
-
-
-
-
 def new_commentaire(request):
 	nom=request.user.username
 
-	form=ComentaireForm(None)
-	object_id=0
-	if request.method=="GET":
-		objet_id=request.GET.get("objet_id","-1")
-		print(objet_id)
-		print("jai un get")
+	if(nom != ''):
+		form=ComentaireForm(None)
+		object_id=0
+		if request.method=="GET":
+			objet_id=request.GET.get("objet_id","-1")
+			print(objet_id)
+			print("jai un get")
 
-	if request.method=="POST":
-		print("j'ai un post")
-		form=ComentaireForm(request.POST)
-		objet_id=request.POST.get("objet_id","-1")
-		print(objet_id)
-		if form.is_valid():
-			print("form valide")
-			Titre=form.cleaned_data['titre']
-			Contenu=form.cleaned_data['contenu']
-			error=form.errors.as_data()
-			print(error)
-			bol_vulgaire=False			
-			contenu=Contenu.lower()
-			for word in gros_mon :
+		if request.method=="POST":
+			print("j'ai un post")
+			form=ComentaireForm(request.POST)
+			objet_id=request.POST.get("objet_id","-1")
+			print(objet_id)
+			if form.is_valid():
+				print("form valide")
+				Titre=form.cleaned_data['titre']
+				Contenu=form.cleaned_data['contenu']
+				error=form.errors.as_data()
+				print(error)
+				bol_vulgaire=False			
+				contenu=Contenu.lower()
+				for word in gros_mon :
+					
+					if word in contenu:
+						bol_vulgaire=True
+						return render(request, 'appPrincipale/commentaire.html', locals())
+				titre=Titre.lower()
+				for word in gros_mon :
+					if word in titre:
+						bol_vulgaire=True
+						return render(request, 'appPrincipale/commentaire.html', locals())
 				
-				if word in contenu:
-					bol_vulgaire=True
-					return render(request, 'appPrincipale/commentaire.html', locals())
-			titre=Titre.lower()
-			for word in gros_mon :
-				if word in titre:
-					bol_vulgaire=True
-					return render(request, 'appPrincipale/commentaire.html', locals())
-			
-			if bol_vulgaire :
-				rien=False
-			else :
-				comentaire=form.save(commit=False)
+				if bol_vulgaire :
+					rien=False
+				else :
+					comentaire=form.save(commit=False)
 
-				objet=Objet.objects.get(id=objet_id)
+					objet=Objet.objects.get(id=objet_id)
 
-				comentaire.content_object=objet
-				comentaire.object_id=objet_id
+					comentaire.content_object=objet
+					comentaire.object_id=objet_id
 
-				comentaire.save()
-				envoie=True
-				article_id=objet_id
-				article=objet
-				commentaires=Comentaire.objects.all()
-				return render(request, 'appPrincipale/services.html', locals())
-	return render(request, 'appPrincipale/commentaire.html', locals())
-
+					comentaire.save()
+					envoie=True
+					article_id=objet_id
+					article=objet
+					commentaires=Comentaire.objects.all()
+					return render(request, 'appPrincipale/services.html', locals())
+		return render(request, 'appPrincipale/commentaire.html', locals())
+	else:
+		return redirect(se_connecter)
 
 def supprimer_commentaire(request):
 	nom=request.user.username
-	categories=Categorie.objects.all()
-	objets=Objet.objects.all()
-	if request.method=="POST":
-		commentaire_id=request.POST.get("commentaire_id")
-		com=Comentaire.objects.get(id=commentaire_id)
-		com.delete()
-		commentaire_supprime=True
-	return render(request , 'appPrincipale/work.html', locals())
+	if(nom != ''):
+		categories=Categorie.objects.all()
+		objets=Objet.objects.all()
+		if request.method=="POST":
+			commentaire_id=request.POST.get("commentaire_id")
+			com=Comentaire.objects.get(id=commentaire_id)
+			com.delete()
+			commentaire_supprime=True
+		return render(request , 'appPrincipale/work.html', locals())
+	else:
+		return redirect(se_connecter)
 
 
 
-
-
-
-
-
-
-
+def se_connecter(request):
+	return render(request , 'appPrincipale/se_connecter.html')
 
 def apropos(request):
     return render(request , 'appPrincipale/apropos.html', locals())
 
 def terms(request):
     return render(request , 'appPrincipale/terms.html', locals())
+
+
+
+	
+def modifier_objet(request):
+    nom = request.user.username
+    if(nom != ''):
+		categories = Categorie.objects.all()
+		nom = request.user.username
+		code_false=False
+		objet_cree=False
+		if request.method=="POST":
+			print(request.POST)
+			form=ObjetForm(request.POST)
+			print(request.POST)
+			objet_id_a_modifier=request.POST.get("objet_id")
+			print(objet_id_a_modifier)
+			objet=Objet.objects.get(id=objet_id_a_modifier)
+			
+			if form.is_valid():
+				print("test forme est valide")
+
+
+				Nom=form.cleaned_data['nom']
+				Description=form.cleaned_data['description']
+
+				bol_vulgaire=False			
+				description=Description.lower()
+				for word in gros_mon :
+
+					if word in description:
+						bol_vulgaire=True
+						return render(request, 'appPrincipale/commentaire.html', locals())
+				nom=Nom.lower()
+				for word in gros_mon :
+					if word in nom:
+						bol_vulgaire=True
+						return render(request, 'appPrincipale/commentaire.html', locals())
+
+				code_postal=request.POST.get("code_postal")
+				photo=request.POST.get("photo")
+				print(photo)
+				try:
+					print("try")
+					int(code_postal)
+					if len(code_postal)==5:
+						OBJET_buffer=form.save(commit=False)
+						objet.categorie=OBJET_buffer.categorie
+						objet.nom=OBJET_buffer.nom
+						objet.description=OBJET_buffer.description
+						objet.code_postal=OBJET_buffer.code_postal
+						objet.adresse=OBJET_buffer.adresse
+						
+						print(objet.photo)
+						
+						objet.save()
+						objet_cree=True
+						objets=Objet.objects.filter(user=request.user)
+						return render(request, 'appPrincipale/about.html', locals())
+					else:
+						code_false=True
+				except ValueError:
+					code_false=True
+					print("c'est pas un int")
+					return render(request, 'appPrincipale/new_objet.html',locals())
+			else:
+				print("form pas valid")
+
+		return render(request, 'appPrincipale/modifier_objet.html',locals())
+			  
+    else:
+        return redirect(se_connecter)	
+
 

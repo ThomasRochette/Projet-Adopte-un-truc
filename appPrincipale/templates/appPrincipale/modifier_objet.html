@@ -7,7 +7,7 @@
 
 
 							{% block top %}
-							<h1>Déposer une annonce</h1>
+							<h1>Modifier votre article</h1>
 							{% endblock %}
 
 {% block des_if %}
@@ -78,7 +78,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-5 col-md-push-1 animate-box">
-					<form id="id" action="{% url "contact" %}" method="post">
+					<form id="id" action="{% url "modifier_objet" %}" method="post">
 							{% csrf_token %}
 							<div class="fh5co-contact-info">
 
@@ -94,7 +94,7 @@
 						<div class="col-md-6 animate-box">
 							<h3>Votre annonce</h3>
 									<select id="id_categorie" name="categorie" size="l">
-										<option>Catégorie
+										<option value="{{objet.categorie.id}}">{{objet.categorie.titre}}</option>
 										{% for categorie in categories %}
 										<option value="{{categorie.id}}">{{categorie.titre}}</option>
 										{% endfor %}
@@ -103,32 +103,33 @@
 								<div class="row form-group">
 									<div class="col-md-12">
 										<!-- <label for="subject">Subject</label> -->
-										<input type="text" id="id_nom" name="nom" class="form-control" placeholder="Titre de l'annonce">
+										<input type="text" id="id_nom" name="nom" class="form-control" value={{objet.nom}}>
 									</div>
 								</div>
 
 								<div class="row form-group">
 									<div class="col-md-12">
 										<!-- <label for="message">Message</label> -->
-										<textarea name="description" id="id_description" cols="30" rows="10" class="form-control" placeholder="Description de l'annonce"></textarea>
+										<textarea name="description" id="id_description" cols="30" rows="10" class="form-control" >{{objet.description}}</textarea>
 									</div>
 								</div>
 								<input type="hidden" name="user" value="1"/>
 								<div class="row form-group">
 									<div class="col-md-12">
 										<!-- <label for="email">Email</label> -->
-										<input type="text" id="id_code_postal" name="code_postal" class="form-control" placeholder="Code Postal">
+										<input type="text" id="id_code_postal" name="code_postal" class="form-control" value={{objet.code_postal}}>
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col-md-12">
 										<!-- <label for="email">Email</label> -->
-										<input type="text" id="id_adresse" name="adresse" class="form-control" placeholder="Adresse...">
+										<input type="text" id="id_adresse" name="adresse" class="form-control" value={{objet.adresse}} placeholder={{objet.adresse}}>
 									</div>
 								</div>
 								
 								</div>
 								<div class="form-group">
+									<input type="hidden" name="objet_id" value={{objet.id}}>
 									<input type="submit" value="Publier" class="btn btn-primary">
 								</div>
 

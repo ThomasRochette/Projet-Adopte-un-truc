@@ -58,6 +58,12 @@
 								<input type="hidden" name="objet_id" value={{objet.id}} />
 								<button type="submit" class="btn btn-primary">Supprimer l'article</button>
 							</form>
+							
+							<form id="id" action="{% url "modifier_objet" %}" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="objet_id" value={{objet.id}} />
+								<button type="submit" class="btn btn-primary">Modifier l'article</button>
+							</form>
 						{% endif %}
 
 						<div class="desc">

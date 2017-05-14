@@ -19,12 +19,14 @@ urlpatterns = [
 	url(r'^supprimer_commentaire/$', views.supprimer_commentaire, name='supprimer_commentaire'),
 	url(r'^login/$', auth_views.login, name='login'),
 	url(r'^logout/$', auth_views.logout, {'next_page': '/accueil/index'}, name='logout'),
-	url(r'^profile/$', views.profile),
+
 	url(r'^inscription/$', views.signup, name='inscription'),
 	url(r'^apropos/$', views.apropos, name='apropos'),
 	url(r'^terms/$', views.terms, name='terms'),
 	
-	
+	url(r'^modifier_objet/$', views.modifier_objet, name='modifier_objet'),
+	url(r'^modifier_profil/$', views.modifier_profil, name='modifier_profil'),
+	url(r'^se_connecter/$', views.se_connecter, name='se_connecter'),
 
 
 
