@@ -63,6 +63,8 @@
 						<div class="desc">
 							<p>Article publié par {{objet.user.first_name}} {{objet.user.last_name}}</p>
 							<p>mail : {{objet.user.email}}</p>
+							
+							<p>publié le : {{objet.date}}</p>
 						</div>
 							<div class="col-md-6 col-md-pull-6">
 								<img class="img-responsive" src="{{objet_image}}" alt="about">
@@ -95,8 +97,10 @@
 							<p></p>
 							<p>&ldquo;{{commentraire.contenu}}&rdquo;</p>
 							<p><strong>    {{commentraire.user.username}}</strong></p>
+							
 						</blockquote>
 						<p class="author" >{{commentraire.titre}}</p>
+						<p>publié le :{{commentraire.date}}</p>
 						<button type="submit" class="btn btn-primary">Supprimer</button>
 					</div>
 				</div>

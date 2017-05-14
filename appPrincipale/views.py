@@ -13,6 +13,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.core.files import File
+from datetime import datetime
+
 
 gros_mon=["putain","merde","chier","enculer","batard","salaud","salope","pute","connard","connasse","con","bite"]
 
@@ -48,8 +50,7 @@ def new_blog(request):
 def new_about(request):
     nom=request.user.username
     print(request.user.id)
-    
-
+    objets=Objet.objects.filter(user=request.user)
     #si je recois un post ca veut dire que j'ai recu une demande pour supprimer un objet
     if request.method=="POST":
         print("recu post")
@@ -118,7 +119,7 @@ def new_contact(request):
 def new_index(request):
     nom=request.user.username
     categories = Categorie.objects.all()
-    objets = Objet.objects.all()
+    objets = Objet.objects.filter(date__month=datetime.now().month)
     return render(request, 'appPrincipale/index.html',locals())
 
 def new_services(request):
@@ -153,7 +154,7 @@ def new_work(request):
     nom = request.user.username
     categories = Categorie.objects.all()
     if request.method=="GET":
-        objets = Objet.objects.all()
+        objets = Objet.objects.filter(date__month=datetime.now().month)
     if request.method == "POST":
         string_titre_catgorie = request.POST.get("Titre_Categorie","Toutes")
         nom_article = request.POST.get("Nom_Article","-1")
@@ -211,7 +212,7 @@ def logout_view(request):
     auth.lougout(request)
     deconnect=True
     #auth.lougout(request)
-    return redirect('appPrincipale/index.html',locals())
+    return redirect(new_index)
 
 
 
@@ -238,7 +239,8 @@ def new_commentaire(request):
 			print("form valide")
 			Titre=form.cleaned_data['titre']
 			Contenu=form.cleaned_data['contenu']
-			
+			error=form.errors.as_data()
+			print(error)
 			bol_vulgaire=False			
 			contenu=Contenu.lower()
 			for word in gros_mon :

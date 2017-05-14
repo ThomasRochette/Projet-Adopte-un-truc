@@ -25,6 +25,8 @@ class ComentaireForm(forms.ModelForm):
 		cleaned_data = super(ComentaireForm, self).clean()
 		titre = cleaned_data.get('titre')
 		contenu = cleaned_data.get('contenu')
+		raise forms.ValidationError("nique")
+		self.add_error("contenu","va nqieur")
 		return cleaned_data 
 		
 		

@@ -5,6 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.auth.models import User
+from datetime import datetime
 
 class Categorie(models.Model):
     titre = models.CharField(max_length=20)
@@ -22,6 +23,7 @@ class Objet(models.Model):
     adresse = models.CharField(max_length=150, default="100 roger salengro")
     photo=models.ImageField(upload_to="photos/", default="photos/ryan_ygf9Uff.jpg")
     user=models.ForeignKey(User, on_delete=models.CASCADE, default="1")
+    date=models.DateTimeField(auto_now=True, verbose_name="Date de parution")
 
 class Comentaire(models.Model):
     titre=models.CharField(max_length=40,default="Default")
@@ -30,5 +32,6 @@ class Comentaire(models.Model):
     object_id = models.PositiveIntegerField(default=1)
     content_object = GenericForeignKey('content_type', 'object_id')
     user=models.ForeignKey(User, on_delete=models.CASCADE, default="1")
+    date=models.DateTimeField(auto_now=True, verbose_name="Date de parution")
     def __str__(self):
         return "Commentaire de {0} sur {1}".format(self.contenu, self.content_object)
