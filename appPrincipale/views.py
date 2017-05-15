@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from appPrincipale.models import Categorie,Objet,Comentaire
-from .forms import ObjetForm, ComentaireForm, ConnexionForm, SignUpForm
+from .forms import ObjetForm, ComentaireForm, ConnexionForm, SignUpForm,SignUpModifierForm
 from django.contrib import auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -205,12 +205,10 @@ def signup(request):
     nom = request.user.username
     if request.method == 'POST':
         form = SignUpForm(request.POST)
+        print(request.POST)
         if form.is_valid():
-            USER_buffer=form.save(commit=False)
-            #
-            #faire le truc avec le USER_buffer
-            #
-            #
+          
+            form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
@@ -224,16 +222,23 @@ def signup(request):
 def modifier_profil(request):
 	nom=request.user.username
 	if(nom != ''):
-		form = SignUpForm(instance=request.user)
+		user=request.user
+		form = SignUpModifierForm(request.POST or None)
 		if request.method == 'POST':
 			print(request.POST)
 			if form.is_valid():
-				form.save()
-				username = form.cleaned_data.get('username')
-				raw_password = form.cleaned_data.get('password1')
-				user = authenticate(username=username, password=raw_password)
+
+
+				user.first_name=form.cleaned_data['first_name']
+				user.last_name=form.cleaned_data['last_name']
+				user.email=form.cleaned_data['email']
+
+				
+				user.save()
+
+				user = authenticate(username=user.username, password=user.password)
 				login(request, user)
-				return redirect('index')
+				return redirect(new_about)
 			print("pas valide")
 		return render(request, 'appPrincipale/modifier_profil.html', {'form': form})
 	else:

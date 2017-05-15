@@ -27,6 +27,8 @@ urlpatterns = [
 	url(r'^modifier_objet/$', views.modifier_objet, name='modifier_objet'),
 	url(r'^modifier_profil/$', views.modifier_profil, name='modifier_profil'),
 	url(r'^se_connecter/$', views.se_connecter, name='se_connecter'),
+	
+	#url(r'ajax/more/$','ajax.more_todo'),
 
 
 

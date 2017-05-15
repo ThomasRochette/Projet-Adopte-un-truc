@@ -35,3 +35,11 @@ class Comentaire(models.Model):
     date=models.DateTimeField(auto_now=True, verbose_name="Date de parution")
     def __str__(self):
         return "Commentaire de {0} sur {1}".format(self.contenu, self.content_object)
+        
+#class FakeUSER(models.Model):
+	
+#	first_name = models.CharField(label = "Prenom", max_length=30)
+#	last_name = models.CharField(label = "Nom de famille", max_length=30)
+#	email = models.EmailField(max_length=254, help_text='Requis. Entrez une adresse mail valide.')
+
+	

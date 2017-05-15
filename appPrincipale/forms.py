@@ -45,3 +45,11 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
+class SignUpModifierForm(forms.Form):
+	
+    first_name = forms.CharField(label = "Prenom", max_length=30)
+    last_name = forms.CharField(label = "Nom de famille", max_length=30)
+    email = forms.EmailField(max_length=254, help_text='Requis. Entrez une adresse mail valide.')
+
+
