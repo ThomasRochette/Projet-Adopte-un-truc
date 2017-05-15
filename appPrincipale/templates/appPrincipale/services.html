@@ -82,42 +82,44 @@
 
 	<div id="fh5co-testimonial" style="background-image:url({%static 'appPrincipale/images/fond_comment.jpg' %});">
 		<div class="overlay"></div>
-		<div class="row animate-box">
-			<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-				<h2>Commentaires liés à cet article</h2>
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<h2>Commentaires liés à cet article</h2>
+				</div>
 			</div>
-		</div>
-		<div class="container">
+			
+			<div class="container">
 			{% for commentraire in commentaires %}
 
-			<div class="row">
-				<form id="id" action="{% url "supprimer_commentaire" %}" method="post">
-					{% csrf_token %}
-				<div class="col-md-4" >
-					<div class="comment">
-					<div class="box-testimony animate-box">
-						<input type="hidden" name="objet_id" value="{{objet_id}}"/>
-						<input type="hidden" name="commentaire_id" value="{{commentraire.id}}"/>
-						<blockquote>
-							<span class="quote"><span><i class="icon-quote"></i></span></span>
-							<p></p>
-							<p>&ldquo;{{commentraire.contenu}}&rdquo;</p>
-							<p><strong>    {{commentraire.user.username}}</strong></p>
-							
-						</blockquote>
-						<p class="author" >{{commentraire.titre}}</p>
-						<p>publié le :{{commentraire.date}}</p>
-						<button type="submit" class="btn btn-primary">Supprimer</button>
+				<div class="row">
+					<form id="id" action="{% url "supprimer_commentaire" %}" method="post">
+						{% csrf_token %}
+					<div class="col-md-4" >
+						<div class="comment">
+							<div class="box-testimony animate-box">
+								<input type="hidden" name="objet_id" value="{{objet_id}}"/>
+								<input type="hidden" name="commentaire_id" value="{{commentraire.id}}"/>
+								<blockquote>
+									<span class="quote"><span><i class="icon-quote"></i></span></span>
+									<p></p>
+									<p>&ldquo;{{commentraire.contenu}}&rdquo;</p>
+									<p><strong>    {{commentraire.user.username}}</strong></p>
+									
+								</blockquote>
+								<p class="author" >{{commentraire.titre}}</p>
+								<p>publié le :{{commentraire.date}}</p>
+								<button type="submit" class="btn btn-primary">Supprimer</button>
+							</div>
+						</div>
 					</div>
-				</div>
-				</div>
-			</form>
+					</form>
 
-			</div>
+				</div>
 			{% endfor %}
 		</div>
 
 	</div>
+	
 	<div id="fh5co-started">
 		<div class="container">
 			<div class="row animate-box">

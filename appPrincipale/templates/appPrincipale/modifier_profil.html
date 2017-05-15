@@ -5,8 +5,7 @@
 	{% endblock %}
 
 {% block top %}
-							<h1>Rejoins UnTruc!</h1>
-							<h2>Pour poster tes annonces et avoir accès à de nombreuses fonctionnalités!</h2>
+							<h1>Modifier votre profil!</h1>
 {% endblock %}
 
 {% block corps %}
@@ -16,7 +15,7 @@
 			<div id="fh5co-contact">
 				<div class="container">
 					<div class="row">
-						<div class="col-md-5 col-md-push-1 animate-box">
+						<!--<div class="col-md-5 col-md-push-1 animate-box">
 
 							<div class="fh5co-contact-info">
 								<h3>Contact Information</h3>
@@ -28,29 +27,31 @@
 								</ul>
 							</div>
 
-						</div>
+						</div>-->
 				{% block content %}
-						  <h2>Créer un compte</h2>
+						  <h2>Modifier ton profil</h2>
 						   <form action="{% url "modifier_profil" %}" method="post">
 							{% csrf_token %}
 							<div class="row form-group">
 									<div class="col-md-12">
+										<label for="id_lastname_" >Last name :</label>
 										<input type="text" name="last_name" class="form-control" value={{user.last_name}}>
 									</div>
 								</div>
 			
 								<div class="row form-group">
 									<div class="col-md-12">
-			
+										<label for="id_Firstname_" >First name :</label>
 										<input type="text" name="first_name" class="form-control" value={{user.first_name}}>
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col-md-12">
+										<label for="id_email_" >Email :</label>
 										<input type="text"  name="email" class="form-control" value={{user.email}}>
 									</div>
 								</div>
-							<input type="submit" value="Je m'inscris!"/>
+							<input type="submit" value="Modifier"/>
 						  </form>
 						{% endblock %}
 	

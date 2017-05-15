@@ -15,15 +15,27 @@ from django.db.models import Q
 from django.core.files import File
 from datetime import datetime
 
+import json
+
+
 
 gros_mon=["putain","merde","chier","enculer","batard","salaud","salope","pute","connard","connasse","con","bite"]
 
 # Create your views here.
 #voir MonObjet et les images
 
+
 def test_generique(request):
 	return render(request,'appPrincipale/test_vu_generique.html')
 
+def more_todo(request):
+	if request.is_jac():
+		todo_items=Objet.objects.filter(date__day=datetime.now().day)
+		#todo_items=['mow Lown','buy graocerie',]
+		data =json.dumps(todo_items)
+		return HttpResponse(data,content_type='appPrincipale/json')
+	else :
+		return redirect(new_work) 
 
 def new_blog(request):
     error = False

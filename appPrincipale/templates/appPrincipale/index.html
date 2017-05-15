@@ -38,5 +38,36 @@
 		</div>
 	</div>
 	
-	<!--<button class='btn get-more'>Plus d'article</button>-->
+	<ul>
+		<li>take the trash</li>
+	</ul>
+	<button id="test" onClick="test()">Plus d'article bt</button>
+	<input type="button" value="Plus d'article" name="MORE" id="MORE"</button>
+	<button class='bt get-more'>more</button>
+	
+
+{% endblock %}
+
+{% block script %}
+<script>
+	$(document).ready(function)(){
+		
+	function test(){
+		alert('bobjour')
+	}
+	
+	$('.get-more').click(function(){
+		alert('bobjour'
+		$.ajax({
+			type:"GET",
+			url:"/ajax/more/",
+			success: function(data){
+				for(i=; i<data.length; i++){
+					$('ul').append('<li>'+data[i]+'</li>');
+				}
+			}
+		});
+	});
+});
+</script>
 {% endblock %}

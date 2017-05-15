@@ -16,18 +16,30 @@
 			
 							
 	{% block fh5co-projet %}	
-	
-	
-	<p>{{user.username}}</p>
-	<p>{{user.first_name}}</p>
-	<p>{{user.last_name}}</p>
-	<p>{{user.email}}</p>
-	
-	
-	<form id="id" action="{% url "modifier_profil" %}" method="post">
+	<div class="col-md-5 col-md-push-1 animate-box">
+
+		<div class="fh5co-contact-info">
+			<h3>Contact Information</h3>
+			<ul>
+				<li class="address">
+					<strong>Username: </strong> <br>{{user.username}} <br> <strong>First name : </strong> <br>{{user.first_name}} <br> <strong>Last name : </strong> <br> {{user.last_name}}</li>
+			
+				<li class="email">{{user.email}}</li>
+>
+			</ul>
+		</div>
+		
+		<form id="id" action="{% url "modifier_profil" %}" method="post">
 			{% csrf_token %}
 			<button type="submit" class="btn btn-primary">Modifier vos informations personnel</button>
 	</form>
+
+	</div>
+	
+	
+	
+	
+	
 	
 	<div style="overflow: auto" id="fh5co-project">
 		<div class="container">
