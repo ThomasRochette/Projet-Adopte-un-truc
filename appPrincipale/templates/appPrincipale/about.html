@@ -42,6 +42,7 @@
 	
 	
 	<div style="overflow: auto" id="fh5co-project">
+		<h3>Vos articles</h3>
 		<div class="container">
 			<div class="row">
 				{%if not objets %}
@@ -83,5 +84,26 @@
 		
 		{% endblock %}
 
+{% block js %}
+	<script>
+	var goToArticle = function() {
+		$('html, body').animate({scrollTop: $('#fh5co-project').offset().top}, 2000);
+		};
 
+
+	 if(window.attachEvent) {
+		window.attachEvent('onload',goToArticle);
+	} else {
+		if(window.onload) {
+				var curronload = window.onload;
+				var newonload = function(evt) {
+						curronload(evt);
+						goToArticle(evt);
+				};
+				window.onload = newonload;
+		} else {
+				window.onload = goToArticle;
+		}
+	} </script>
+{% endblock %}
 	
