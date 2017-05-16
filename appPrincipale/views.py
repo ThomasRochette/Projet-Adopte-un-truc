@@ -19,7 +19,7 @@ import json
 
 
 
-gros_mon=["putain","merde","chier","enculer","batard","salaud","salope","pute","connard","connasse","con","bite"]
+gros_mon=[" putain "," merde "," chier "," enculer "," batard "," salaud "," salope "," connard "," connasse "," connard "]
 
 # Create your views here.
 #voir MonObjet et les images
@@ -106,12 +106,12 @@ def new_contact(request):
 
 					if word in description:
 						bol_vulgaire=True
-						return render(request, 'appPrincipale/commentaire.html', locals())
+						return render(request, 'appPrincipale/new_objet.html', locals())
 				nom=Nom.lower()
 				for word in gros_mon :
 					if word in nom:
 						bol_vulgaire=True
-						return render(request, 'appPrincipale/commentaire.html', locals())
+						return render(request, 'appPrincipale/new_objet.html', locals())
 
 				code_postal=request.POST.get("code_postal")
 				photo=request.POST.get("photo")
@@ -122,6 +122,22 @@ def new_contact(request):
 					if len(code_postal)==5:
 						objet=form.save(commit=False)
 						objet.user=request.user
+						if objet.categorie.titre =="Loisirs":
+							objet.photo="/photos/loisirs.png"
+						elif objet.categorie.titre=="Vehicules":
+							objet.photo="photos/vehicules.png"
+						elif objet.categorie.titre=="Immobilier":
+							objet.photo="photos/pret-immo.png"
+						elif objet.categorie.titre=="Vacances":
+							objet.photo="photos/vacances.png"
+						elif objet.categorie.titre=="Multimedia":
+							objet.photo="photos/multimedia.png"
+						elif objet.categorie.titre=="Services":
+							objet.photo="photos/services.png"
+						elif objet.categorie.titre=="Maison":
+							objet.photo="photos/interieur.png"
+						elif objet.categorie.titre=="Professionnel":
+							objet.photo="photos/pro.png"
 						print(objet.photo)
 						objet.save()
 						objet_cree=True

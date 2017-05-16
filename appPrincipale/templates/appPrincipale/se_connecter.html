@@ -3,11 +3,47 @@
 	{% block load_static %}
 	{% load static %}
 	{% endblock %}
-	
+
 							{% block top %}
 								<h1>Connectez vous</h1>
 							{% endblock %}
-	
+	{% block fh5co-nav %}
+								<nav class="fh5co-nav" role="navigation">
+
+
+									<div class="container">
+										<div class="row">
+											<div class="left-menu text-right menu-1">
+												<ul>
+													<li><a href="/accueil/work">Tous les articles</a></li>
+													<li class="active"><a href="/accueil/about">Profil</a></li>
+													<li class="has-dropdown">
+														<a href="/accueil/services">Accueil</a>
+													</li>
+												</ul>
+											</div>
+											<div class="logo text-center">
+												<div id="fh5co-logo"><a href="/accueil/index"><img src="{%static 'appPrincipale/images/logoA1Tpetitsf.png' %}" alt="tonimage" /></a></div>
+											</div>
+											<div class="right-menu text-left menu-1">
+												<ul>
+													{% if request.user.is_authenticated %}
+															<li><a href="/accueil/logout/">Déconnexion</a></li>
+													{% else %}
+															<li><a href="/accueil/blog">Connexion</a></li>
+													{% endif %}
+													<li class="has-dropdown">
+														<a href="/accueil/inscription">Inscription</a>
+													</li>
+													<li><a href="/accueil/contact">Ajouter un article</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+
+								</nav>
+
+{% endblock %}
 {% block corps %}
 <div id="fh5co-started">
 			<div class="container">

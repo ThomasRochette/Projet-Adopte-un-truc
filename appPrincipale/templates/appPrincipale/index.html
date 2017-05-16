@@ -3,7 +3,43 @@
 {% block load_static %}
 	{% load static %}
 	{% endblock %}
-	
+	{% block fh5co-nav %}
+		<nav class="fh5co-nav" role="navigation">
+
+
+			<div class="container">
+				<div class="row">
+					<div class="left-menu text-right menu-1">
+						<ul>
+							<li><a href="/accueil/work">Tous les articles</a></li>
+							<li><a href="/accueil/about">Profil</a></li>
+							<li class="has-dropdown active">
+								<a href="/accueil/services">Accueil</a>
+							</li>
+						</ul>
+					</div>
+					<div class="logo text-center">
+						<div id="fh5co-logo"><a href="/accueil/index"><img src="{%static 'appPrincipale/images/logoA1Tpetitsf.png' %}" alt="tonimage" /></a></div>
+					</div>
+					<div class="right-menu text-left menu-1">
+						<ul>
+							{% if request.user.is_authenticated %}
+									<li><a href="/accueil/logout/">Déconnexion</a></li>
+							{% else %}
+									<li><a href="/accueil/blog">Connexion</a></li>
+							{% endif %}
+							<li class="has-dropdown">
+								<a href="/accueil/inscription">Inscription</a>
+							</li>
+							<li><a href="/accueil/contact">Ajouter un article</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</nav>
+
+	{% endblock %}
 
 {% block fh5co-projet %}
 	<div style="overflow: auto" id="fh5co-project">
@@ -19,9 +55,9 @@
 						<div class="fh5co-blog animate-box">
 
 							<input type="hidden" name="objet_id" value="{{objet.id}}"/>
-							
-							<input type="hidden" name="objet_image" value="{%static 'appPrincipale/images/work-4.jpg' %}"/>
-							<input type="image" class="img-responsive" src="{%static 'appPrincipale/images/work-4.jpg' %}" alt="Submit"/>
+
+							<input type="hidden" name="objet_image" value="{{objet.photo.url}}"/>
+							<input type="image" class="img-responsive" src="{{objet.photo.url}}" alt="Submit"/>
 							<div class="blog-text">
 								<h3><a href="/accueil/article">{{objet.nom}}</a></h3>
 								<span class="posted_on">{{objet.categorie}}</span>
@@ -37,25 +73,25 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<ul>
 		<li>take the trash</li>
 	</ul>
 	<button id="test" onClick="test()">Plus d'article bt</button>
 	<input type="button" value="Plus d'article" name="MORE" id="MORE"</button>
 	<button class='bt get-more'>more</button>
-	
+
 
 {% endblock %}
 
 {% block script %}
 <script>
 	$(document).ready(function)(){
-		
+
 	function test(){
 		alert('bobjour')
 	}
-	
+
 	$('.get-more').click(function(){
 		alert('bobjour'
 		$.ajax({

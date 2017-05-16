@@ -44,6 +44,10 @@
 							<p>{{objet.description}}</p>
 							<p>{{objet.code_postal}}, {{objet.adresse}}</P>
 						</div>
+						</div>
+							<div class="col-md-6 col-md-pull-6">
+								<img class="img-responsive" src="{{objet_image}}" alt="about">
+						</div>
 
 						{% if peut_commenter %}
 							 <form id="id" action="{% url "commentaire" %}" method="get">
@@ -58,7 +62,7 @@
 								<input type="hidden" name="objet_id" value={{objet.id}} />
 								<button type="submit" class="btn btn-primary">Supprimer l'article</button>
 							</form>
-							
+
 							<form id="id" action="{% url "modifier_objet" %}" method="post">
 								{% csrf_token %}
 								<input type="hidden" name="objet_id" value={{objet.id}} />
@@ -69,12 +73,8 @@
 						<div class="desc">
 							<p>Article publié par {{objet.user.first_name}} {{objet.user.last_name}}</p>
 							<p>mail : {{objet.user.email}}</p>
-							
+
 							<p>publié le : {{objet.date}}</p>
-						</div>
-							<div class="col-md-6 col-md-pull-6">
-								<img class="img-responsive" src="{{objet_image}}" alt="about">
-							</div>
 				</div>
 			</div>
 		</div>
@@ -87,7 +87,7 @@
 					<h2>Commentaires liés à cet article</h2>
 				</div>
 			</div>
-			
+
 			<div class="container">
 			{% for commentraire in commentaires %}
 
@@ -104,7 +104,7 @@
 									<p></p>
 									<p>&ldquo;{{commentraire.contenu}}&rdquo;</p>
 									<p><strong>    {{commentraire.user.username}}</strong></p>
-									
+
 								</blockquote>
 								<p class="author" >{{commentraire.titre}}</p>
 								<p>publié le :{{commentraire.date}}</p>
@@ -119,7 +119,7 @@
 		</div>
 
 	</div>
-	
+
 	<div id="fh5co-started">
 		<div class="container">
 			<div class="row animate-box">
@@ -139,6 +139,4 @@
 			</div>
 		</div>
 	</div>
-{% endblock %}	
-
-	
+{% endblock %}

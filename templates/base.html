@@ -37,7 +37,7 @@
 
 	<link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-	
+
 	{% block load_static %}
 	{% load static %}
 	{% endblock %}
@@ -60,7 +60,7 @@
 	</head>
 	{% endblock %}
 
-	<body>
+<body>
 
 	<div class="fh5co-loader"></div>
 
@@ -70,7 +70,7 @@
 {% block fh5co-nav %}
 	<nav class="fh5co-nav" role="navigation">
 
-		
+
 		<div class="container">
 			<div class="row">
 				<div class="left-menu text-right menu-1">
@@ -83,7 +83,7 @@
 					</ul>
 				</div>
 				<div class="logo text-center">
-					<div id="fh5co-logo"><a href="/accueil/index">UnTruc</a></div>
+					<div id="fh5co-logo"><a href="/accueil/index"><img src="{%static 'appPrincipale/images/logoA1Tpetitsf.png' %}" alt="tonimage" /></a></div>
 				</div>
 				<div class="right-menu text-left menu-1">
 					<ul>
@@ -100,7 +100,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 	</nav>
 
 {% endblock %}
@@ -108,21 +108,21 @@
 
 
 {% block fh5co-header %}
-	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/partage.jpg' %});">
+	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/back.jpg' %});">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							
+
 							{% block top %}
 								{% block text_centre_top %}
 								<h1>Que recherchez vous ?</h1>
 								<h2> Les résultats seront localisés au plus proche de vous</h2>
 								{% endblock %}
-								
-								
+
+
 								{% block barre_recherche %}
 								<div class="row">
 									<form class="form-inline" id="fh5co-header-subscribe" action="{% url "work" %}" method="post">
@@ -173,8 +173,8 @@
 
 							</div>
 		{% endif %}
-		
-		
+
+
 		{% if commentaire_poster %}
 
 							<div class="feature-center animate-box" data-animate-effect="fadeIn">
@@ -217,7 +217,7 @@
 		{% endif %}
 
 {% endblock %}
-				
+
 {% block corps %}
 	{% block fh5co-projet %}
 		<div id="fh5co-project">
@@ -228,8 +228,8 @@
 						<p>N'hésitez pas à rentrer une adresse et une catégorie dans la barre de recherche pour affiner vos recherches </p>
 					</div>
 				</div>
-				
-				
+
+
 				<div id="fh5co-project">
 
 					<div class="row">
@@ -250,7 +250,7 @@
 						{% endfor %}
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	{% endblock %}
@@ -326,10 +326,10 @@
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
-	
+
 		{% block js %}
 		{% endblock %}
-	
+
 
 		{% block src_fin %}
 	<!-- jQuery -->

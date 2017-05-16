@@ -72,7 +72,7 @@
 					</ul>
 				</div>
 				<div class="logo text-center">
-					<div id="fh5co-logo"><a href="/accueil/index">UnTruc</a></div>
+					<div id="fh5co-logo"><a href="/accueil/index"><img src="{%static 'appPrincipale/images/logoA1Tpetitsf.png' %}" alt="tonimage" /></a></div>
 				</div>
 				<div class="right-menu text-left menu-1">
 					<ul>
@@ -92,7 +92,7 @@
 		</div>
 	</nav>
 
-	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/partage.jpg' %});">
+	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/back.jpg' %});">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row">
@@ -147,7 +147,7 @@
 		  var map;
 		  function initialize() {
 		    geocoder = new google.maps.Geocoder();
-		    var latlng = new google.maps.LatLng(-34.397, 150.644);
+		    var latlng = new google.maps.LatLng(46.00, 2.00);
 		    var mapOptions = {
 		      zoom: 8,
 		      center: latlng
@@ -166,12 +166,13 @@
 				        }
 				        // This is checking to see if the Geoeode Status is OK before proceeding
 				        if (status == google.maps.GeocoderStatus.OK) {
-				            console.log(results);
+				            //console.log(results);
 				            var address = (results[0].formatted_address);
+										//window.alert(address.toString());
 				        }
 				    });
 				}
-				var position_user;
+				//var position_user;
 				var infoWindow = new google.maps.InfoWindow({map: map});
 				if (navigator.geolocation) {
 				 navigator.geolocation.getCurrentPosition(function(position) {
@@ -180,8 +181,9 @@
 						 lat: position.coords.latitude,
 						 lng: position.coords.longitude
 					 };
-					 //position_user=getReverseGeocodingData(position.coords.latitude, position.coords.longitude);
-					 //window.alert(position_user.toString());
+					 //position_user=getReverseGeocodingData(pos.lat, pos.lng);
+					 //window.alert(pos.lat);
+					 //window.alert(pos.lng);
 					 var pinColor = "0000FF";
 						var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
 								new google.maps.Size(21, 34),
@@ -199,9 +201,9 @@
 							Title: "Votre position actuelle"
 					 });
 					 map.setCenter(pos);
-					 infoWindow.setPosition(pos);
-					 infoWindow.setContent('Votre localisation');
-					 map.setCenter(pos);
+					 //infoWindow.setPosition(pos);
+					 //infoWindow.setContent('Votre localisation');
+					 //map.setCenter(pos);
 				 }, function() {
 					 handleLocationError(true, infoWindow, map.getCenter());
 				 });
@@ -219,9 +221,10 @@
 					{% for objet in objets %}
 
 						address = "{{objet.code_postal}}+{{objet.adresse}}";
+						//position_user="6 avenue des arts 69100";
 				    //var address = document.getElementById('address').value;
-						//var distance = google.maps.geometry.spherical.computeDistanceBetween( address, position_user );
-						//console.log.println(distance);
+						//var distance = google.maps.geometry.spherical.computeDistanceBetween( "paris", "new_york" );
+						//window.alert(distance);
 
 					  geocoder.geocode( { 'address': address}, function(results, status) {
 				      if (status == 'OK') {
@@ -297,8 +300,8 @@
 							<!--<input type="hidden" name="article_nom" value="{{objet.nom}}"/>
 							<input type="hidden" name="article_description" value="{{objet.description}}"/>
 							<input type="hidden" name="article_categorie" value="{{objet.categorie}}"/>-->
-							<input type="hidden" name="objet_image" value="{%static 'appPrincipale/images/work-4.jpg' %}"/>
-							<input type="image" class="img-responsive" src="{%static 'appPrincipale/images/work-4.jpg' %}" alt="Submit"/>
+							<input type="hidden" name="objet_image" value="{{objet.photo.url}}"/>
+							<input type="image" class="img-responsive" src="{{objet.photo.url}}" alt="Submit"/>
 							<div class="blog-text">
 								<h3><a href="/accueil/article">{{objet.nom|truncatechars:20}}</a></h3>
 								<span class="posted_on">{{objet.categorie}}</span>

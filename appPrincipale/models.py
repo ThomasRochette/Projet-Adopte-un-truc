@@ -21,7 +21,7 @@ class Objet(models.Model):
     description = models.TextField(null=True, max_length=500, default ="Pas de description")
     code_postal= models.CharField(max_length=5,default="69100")
     adresse = models.CharField(max_length=150, default="100 roger salengro")
-    photo=models.ImageField(upload_to="photos/", default="photos/ryan_ygf9Uff.jpg")
+    photo=models.ImageField(null=True, upload_to="photos/")
     user=models.ForeignKey(User, on_delete=models.CASCADE, default="1")
     date=models.DateTimeField(auto_now=True, verbose_name="Date de parution")
 
@@ -35,11 +35,9 @@ class Comentaire(models.Model):
     date=models.DateTimeField(auto_now=True, verbose_name="Date de parution")
     def __str__(self):
         return "Commentaire de {0} sur {1}".format(self.contenu, self.content_object)
-        
+
 #class FakeUSER(models.Model):
-	
+
 #	first_name = models.CharField(label = "Prenom", max_length=30)
 #	last_name = models.CharField(label = "Nom de famille", max_length=30)
 #	email = models.EmailField(max_length=254, help_text='Requis. Entrez une adresse mail valide.')
-
-	
