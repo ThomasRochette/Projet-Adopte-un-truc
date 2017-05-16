@@ -8,11 +8,11 @@ class ObjetForm(forms.ModelForm):
     class Meta:
         model = Objet
         fields = '__all__'
-        def clean(self):
-			cleaned_data = super(ComentaireForm, self).clean()
-			nom= cleaned_data.get('nom')
-			description = cleaned_data.get('description')
-			return cleaned_data 
+	def clean(self):
+		cleaned_data = super(ComentaireForm, self).clean()
+		nom= cleaned_data.get('nom')
+		description = cleaned_data.get('description')
+		return cleaned_data 
  
 
 class ComentaireForm(forms.ModelForm):

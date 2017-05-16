@@ -314,7 +314,8 @@ def new_commentaire(request):
 					article_id=objet_id
 					article=objet
 					commentaires=Comentaire.objects.all()
-					return render(request, 'appPrincipale/services.html', locals())
+					commentaire_poster=True
+					return (new_index)
 		return render(request, 'appPrincipale/commentaire.html', locals())
 	else:
 		return redirect(se_connecter)
