@@ -1,13 +1,97 @@
-{% extends "base.html" %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Adopte1Truc &mdash; Site de partage d'articles géolocalisés</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Site de partage d'articles géolocalisés" />
+	<meta name="keywords" content="site, recherche, articles, objets, Adopte1Truc, localisé, proche, chercher, trouver" />
+	<meta name="author" content="V.Pereira, M.Lapeyre, T.Rochette, B.Cauchard" />
 
-	{% block load_static %}
+	<!--
+	//////////////////////////////////////////////////////
+
+	FREE HTML5 TEMPLATE
+	DESIGNED & DEVELOPED by FreeHTML5.co
+
+	Website: 		http://freehtml5.co/
+	Email: 			info@freehtml5.co
+	Twitter: 		http://twitter.com/fh5co
+	Facebook: 		https://www.facebook.com/fh5co
+
+	//////////////////////////////////////////////////////
+	 -->
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
 	{% load static %}
-	{% endblock %}
-	
-	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{%static 'appPrincipale/css/animate.css' %}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{%static 'appPrincipale/css/icomoon.css' %}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{%static 'appPrincipale/css/bootstrap.css' %}">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{%static 'appPrincipale/css/style.css' %}">
+
+	<!-- Modernizr JS -->
+	<script src="{%static 'appPrincipale/js/modernizr-2.6.2.min.js' %}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body onload="initialize(); codeAddress();" >
 
 
-{% block fh5co-header %}
+	<div id="page">
+	<nav class="fh5co-nav" role="navigation">
+
+		<div class="container">
+			<div class="row">
+				<div class="left-menu text-right menu-1">
+					<ul>
+						<li class="active"><a href="/accueil/work">Tous les articles</a></li>
+						<li><a href="/accueil/about">Profil</a></li>
+						<li class="has-dropdown">
+							<a href="/accueil/services">Accueil</a>
+						</li>
+					</ul>
+				</div>
+				<div class="logo text-center">
+					<div id="fh5co-logo"><a href="/accueil/index">UnTruc</a></div>
+				</div>
+				<div class="right-menu text-left menu-1">
+					<ul>
+						{% if request.user.is_authenticated %}
+								<li><a href="/accueil/logout/">Déconnexion</a></li>
+						{% else %}
+								<li><a href="/accueil/blog">Connexion</a></li>
+						{% endif %}
+						<li class="has-dropdown">
+							<a href="/accueil/inscription">Inscription</a>
+						</li>
+						<li><a href="/accueil/contact">Ajouter un article</a></li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</nav>
+
 	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({%static 'appPrincipale/images/partage.jpg' %});">
 		<div class="overlay"></div>
 		<div class="container">
@@ -56,9 +140,129 @@
 			</div>
 		</div>
 	</header>
-	{% endblock %}
 
-{% block des_if %}
+
+	    <script>
+			var geocoder;
+		  var map;
+		  function initialize() {
+		    geocoder = new google.maps.Geocoder();
+		    var latlng = new google.maps.LatLng(-34.397, 150.644);
+		    var mapOptions = {
+		      zoom: 8,
+		      center: latlng
+		    }
+		    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		  }
+
+		  function codeAddress() {
+				function getReverseGeocodingData(lat, lng) {
+				    var latlng = new google.maps.LatLng(lat, lng);
+				    // This is making the Geocode request
+				    var geocoder = new google.maps.Geocoder();
+				    geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+				        if (status !== google.maps.GeocoderStatus.OK) {
+				            alert(status);
+				        }
+				        // This is checking to see if the Geoeode Status is OK before proceeding
+				        if (status == google.maps.GeocoderStatus.OK) {
+				            console.log(results);
+				            var address = (results[0].formatted_address);
+				        }
+				    });
+				}
+				var position_user;
+				var infoWindow = new google.maps.InfoWindow({map: map});
+				if (navigator.geolocation) {
+				 navigator.geolocation.getCurrentPosition(function(position) {
+
+					 var pos = {
+						 lat: position.coords.latitude,
+						 lng: position.coords.longitude
+					 };
+					 //position_user=getReverseGeocodingData(position.coords.latitude, position.coords.longitude);
+					 //window.alert(position_user.toString());
+					 var pinColor = "0000FF";
+						var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+								new google.maps.Size(21, 34),
+								new google.maps.Point(0,0),
+								new google.maps.Point(10, 34));
+						var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+								new google.maps.Size(40, 37),
+								new google.maps.Point(0, 0),
+								new google.maps.Point(12, 35));
+					var marker = new google.maps.Marker({
+							map: map,
+							position: pos,
+							icon: pinImage,
+							shadow: pinShadow,
+							Title: "Votre position actuelle"
+					 });
+					 map.setCenter(pos);
+					 infoWindow.setPosition(pos);
+					 infoWindow.setContent('Votre localisation');
+					 map.setCenter(pos);
+				 }, function() {
+					 handleLocationError(true, infoWindow, map.getCenter());
+				 });
+			 } else {
+				 // if Browser doesn't support Geolocation
+				 handleLocationError(false, infoWindow, map.getCenter());
+			 }
+			 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+				infoWindow.setPosition(pos);
+				infoWindow.setContent(browserHasGeolocation ?
+															'Error: The Geolocation service failed.' :
+															'Error: Your browser doesn\'t support geolocation.');
+			}
+					var i=0;
+					{% for objet in objets %}
+
+						address = "{{objet.code_postal}}+{{objet.adresse}}";
+				    //var address = document.getElementById('address').value;
+						//var distance = google.maps.geometry.spherical.computeDistanceBetween( address, position_user );
+						//console.log.println(distance);
+
+					  geocoder.geocode( { 'address': address}, function(results, status) {
+				      if (status == 'OK') {
+								i=i+1;
+				        //map.setCenter(results[0].geometry.location);
+
+				        var marker = new google.maps.Marker({
+				            map: map,
+				            position: results[0].geometry.location,
+										Title: "article n°"+i.toString()+" - {{objet.nom}}"
+				        });
+				      } else {
+				        //alert('Geocode was not successful for the following reason: ' + status);
+				      }
+				    });
+					{% endfor %}
+
+		  }
+
+	    </script>
+
+
+			<div id="map" style=" width: 100%; height: 300px;"></div>
+
+			<script>
+			function initMap() {
+
+				var map = new google.maps.Map(document.getElementById('map'), {
+					zoom: 3,
+					center: {lat: 45.7667, lng: 4.8833}
+				});
+
+
+			}
+			</script>
+			<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+	    </script>
+	    <script async defer
+	    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDw0Of6GQVBudbZhUokaYEsszZKuwryREQ&libraries=geometry&callback=initMap">
+			</script>
+
 	{% if commentaire_supprime %}
 		<div id="fh5co-services" class="fh5co-bg-section">
 			<div class="container">
@@ -76,11 +280,7 @@
 			</div>
 	</div>
 	{% endif %}
-	
-{% endblock %}
 
-
-{% block fh5co-projet %}
 	<div style="overflow: auto" id="fh5co-project">
 		<div class="container">
 			<div class="row">
@@ -94,14 +294,16 @@
 						<div class="fh5co-blog animate-box">
 
 							<input type="hidden" name="objet_id" value="{{objet.id}}"/>
-							
+							<!--<input type="hidden" name="article_nom" value="{{objet.nom}}"/>
+							<input type="hidden" name="article_description" value="{{objet.description}}"/>
+							<input type="hidden" name="article_categorie" value="{{objet.categorie}}"/>-->
 							<input type="hidden" name="objet_image" value="{%static 'appPrincipale/images/work-4.jpg' %}"/>
 							<input type="image" class="img-responsive" src="{%static 'appPrincipale/images/work-4.jpg' %}" alt="Submit"/>
 							<div class="blog-text">
-								<h3><a href="/accueil/article">{{objet.nom}}</a></h3>
+								<h3><a href="/accueil/article">{{objet.nom|truncatechars:20}}</a></h3>
 								<span class="posted_on">{{objet.categorie}}</span>
 								<span class="comment"><a href=""><i class="icon-speech-bubble"></i></a></span>
-								<p>{{objet.description|truncatewords:20}}</p>
+								<p>{{objet.description|truncatechars:30}}</p>
 								<button type="submit" class="btn btn-primary">En savoir plus</button>
 							</div>
 						</div>
@@ -112,15 +314,75 @@
 			</div>
 		</div>
 	</div>
-{% endblock %}
 
 
+	<div id="fh5co-started">
+		<div class="container">
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<h2>Vous voulez créer votre propre annonce?</h2>
+					<p>Rejoignez UnTruc ou connectez-vous pour avoir accès à toutes les fonctionnalités présentes sur le site</p>
+				</div>
+			</div>
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2">
+					<form action="/accueil/blog" class="form-inline">
+						<div class="col-md-6 col-md-offset-3 col-sm-6">
+							<button type="submit" class="btn btn-default btn-block">Se connecter</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	
-	{% block js %}
+	<footer id="fh5co-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
+					<ul class="fh5co-footer-links">
+						<li><a href="/accueil/apropos/">About us et contact</a></li>
+					</ul>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
+					<ul class="fh5co-footer-links">
+						<li><a href="/accueil/terms/">Terms, CGU</a></li>
+					</ul>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-0 text-center">
+					<ul class="fh5co-footer-links">
+						<li><a href="/accueil/index/">Index</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="row copyright">
+				<div class="col-md-12 text-center">
+					<p>
+						<small class="block">&copy; 2017 Adopte1Truc. All Rights Reserved.</small>
+						<small class="block">Designed by V.Pereira, M.Lapeyre, B.Cauchard, T.Rochette</a></small>
+					</p>
+					<p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-linkedin"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+						</ul>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
 	<script>
 	var goToArticle = function() {
-		$('html, body').animate({scrollTop: $('#fh5co-project').offset().top}, 2000);
+		$('html, body').animate({scrollTop: $('#map').offset().top}, 2000);
 		};
 
 
@@ -138,8 +400,16 @@
 				window.onload = goToArticle;
 		}
 	} </script>
-	{% endblock %}
-	
-	
-	
+	<!-- jQuery -->
+	<script src="{%static 'appPrincipale/js/jquery.min.js' %}"></script>
+	<!-- jQuery Easing -->
+	<script src="{%static 'appPrincipale/js/jquery.easing.1.3.js' %}"></script>
+	<!-- Bootstrap -->
+	<script src="{%static 'appPrincipale/js/bootstrap.min.js' %}"></script>
+	<!-- Waypoints -->
+	<script src="{%static 'appPrincipale/js/jquery.waypoints.min.js' %}"></script>
+	<!-- Main -->
+	<script src="{%static 'appPrincipale/js/main.js' %}"></script>
 
+	</body>
+</html>

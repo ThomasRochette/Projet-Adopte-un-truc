@@ -35,7 +35,7 @@ def more_todo(request):
 		data =json.dumps(todo_items)
 		return HttpResponse(data,content_type='appPrincipale/json')
 	else :
-		return redirect(new_work) 
+		return redirect(new_work)
 
 def new_blog(request):
     error = False
@@ -63,10 +63,10 @@ def new_blog(request):
 #affiche le profil du gars
 def new_about(request):
     nom=request.user.username
-    if(nom != ''):    
+    if(nom != ''):
 		user=request.user
 		objets=Objet.objects.filter(user=request.user)
-		
+
 		#si je recois un post ca veut dire que j'ai recu une demande pour supprimer un objet
 		if request.method=="POST":
 			print("recu post")
@@ -82,7 +82,7 @@ def new_about(request):
 def new_contact(request):
     nom = request.user.username
     if(nom != ''):
-		
+
 		categories = Categorie.objects.all()
 		objets = Objet.objects.all()
 		nom = request.user.username
@@ -100,7 +100,7 @@ def new_contact(request):
 				Nom=form.cleaned_data['nom']
 				Description=form.cleaned_data['description']
 
-				bol_vulgaire=False			
+				bol_vulgaire=False
 				description=Description.lower()
 				for word in gros_mon :
 
@@ -136,14 +136,14 @@ def new_contact(request):
 				print("form pas valid")
 				objet_false=True
 		return render(request, 'appPrincipale/new_objet.html',locals())
-		
+
     else:
         return redirect(se_connecter)
-        
+
 def new_index(request):
     nom=request.user.username
     categories = Categorie.objects.all()
-    objets = Objet.objects.filter(date__month=datetime.now().month)
+    objets = Objet.objects.all()
     return render(request, 'appPrincipale/index.html',locals())
 
 def new_services(request):
@@ -156,8 +156,8 @@ def new_services(request):
 def new_article(request):
 
     nom = request.user.username
-  
-    user=request.user   
+
+    user=request.user
     categories = Categorie.objects.all()
     objets = Objet.objects.all()
     peut_commenter=True
@@ -180,7 +180,7 @@ def new_work(request):
     nom = request.user.username
     categories = Categorie.objects.all()
     if request.method=="GET":
-        objets = Objet.objects.filter(date__month=datetime.now().month)
+        objets = Objet.objects.all()
     if request.method == "POST":
         string_titre_catgorie = request.POST.get("Titre_Categorie","Toutes")
         nom_article = request.POST.get("Nom_Article","-1")
@@ -219,7 +219,7 @@ def signup(request):
         form = SignUpForm(request.POST)
         print(request.POST)
         if form.is_valid():
-          
+
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
@@ -245,7 +245,7 @@ def modifier_profil(request):
 				user.last_name=form.cleaned_data['last_name']
 				user.email=form.cleaned_data['email']
 
-				
+
 				user.save()
 
 				user = authenticate(username=user.username, password=user.password)
@@ -254,7 +254,7 @@ def modifier_profil(request):
 			print("pas valide")
 		return render(request, 'appPrincipale/modifier_profil.html', {'form': form})
 	else:
-		return redirect(se_connecter)		
+		return redirect(se_connecter)
 
 def logout_view(request):
 
@@ -286,10 +286,10 @@ def new_commentaire(request):
 				Contenu=form.cleaned_data['contenu']
 				error=form.errors.as_data()
 				print(error)
-				bol_vulgaire=False			
+				bol_vulgaire=False
 				contenu=Contenu.lower()
 				for word in gros_mon :
-					
+
 					if word in contenu:
 						bol_vulgaire=True
 						return render(request, 'appPrincipale/commentaire.html', locals())
@@ -298,7 +298,7 @@ def new_commentaire(request):
 					if word in titre:
 						bol_vulgaire=True
 						return render(request, 'appPrincipale/commentaire.html', locals())
-				
+
 				if bol_vulgaire :
 					rien=False
 				else :
@@ -347,7 +347,7 @@ def terms(request):
 
 
 
-	
+
 def modifier_objet(request):
     nom = request.user.username
     if(nom != ''):
@@ -362,7 +362,7 @@ def modifier_objet(request):
 			objet_id_a_modifier=request.POST.get("objet_id")
 			print(objet_id_a_modifier)
 			objet=Objet.objects.get(id=objet_id_a_modifier)
-			
+
 			if form.is_valid():
 				print("test forme est valide")
 
@@ -370,7 +370,7 @@ def modifier_objet(request):
 				Nom=form.cleaned_data['nom']
 				Description=form.cleaned_data['description']
 
-				bol_vulgaire=False			
+				bol_vulgaire=False
 				description=Description.lower()
 				for word in gros_mon :
 
@@ -396,9 +396,9 @@ def modifier_objet(request):
 						objet.description=OBJET_buffer.description
 						objet.code_postal=OBJET_buffer.code_postal
 						objet.adresse=OBJET_buffer.adresse
-						
+
 						print(objet.photo)
-						
+
 						objet.save()
 						objet_cree=True
 						objets=Objet.objects.filter(user=request.user)
@@ -413,8 +413,6 @@ def modifier_objet(request):
 				print("form pas valid")
 
 		return render(request, 'appPrincipale/modifier_objet.html',locals())
-			  
+
     else:
-        return redirect(se_connecter)	
-
-
+        return redirect(se_connecter)
