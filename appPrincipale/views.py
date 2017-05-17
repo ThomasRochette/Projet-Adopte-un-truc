@@ -293,6 +293,7 @@ def new_commentaire(request):
 
 		if request.method=="POST":
 			print("j'ai un post")
+			print(request.POST)
 			form=ComentaireForm(request.POST)
 			objet_id=request.POST.get("objet_id","-1")
 			print(objet_id)
@@ -319,19 +320,16 @@ def new_commentaire(request):
 					rien=False
 				else :
 					comentaire=form.save(commit=False)
-
+					
 					objet=Objet.objects.get(id=objet_id)
-
 					comentaire.content_object=objet
 					comentaire.object_id=objet_id
-
 					comentaire.save()
 					envoie=True
 					article_id=objet_id
 					article=objet
-					commentaires=Comentaire.objects.all()
 					commentaire_poster=True
-					return (new_index)
+					return redirect(new_index)
 		return render(request, 'appPrincipale/commentaire.html', locals())
 	else:
 		return redirect(se_connecter)
