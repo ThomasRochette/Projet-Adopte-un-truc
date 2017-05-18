@@ -32,8 +32,8 @@ def more_todo(request):
 	if request.is_jac():
 		todo_items=Objet.objects.filter(date__day=datetime.now().day)
 		#todo_items=['mow Lown','buy graocerie',]
-		data =json.dumps(todo_items)
-		return HttpResponse(data,content_type='appPrincipale/json')
+		mes_objets =json.dumps(todo_items)
+		return HttpResponse(mes_objets,content_type='appPrincipale/json')
 	else :
 		return redirect(new_work)
 
@@ -319,15 +319,19 @@ def new_commentaire(request):
 				if bol_vulgaire :
 					rien=False
 				else :
+					print("pas vulgaire")
 					comentaire=form.save(commit=False)
-					
+	
 					objet=Objet.objects.get(id=objet_id)
+
 					comentaire.content_object=objet
 					comentaire.object_id=objet_id
+
 					comentaire.save()
 					envoie=True
 					article_id=objet_id
 					article=objet
+					commentaires=Comentaire.objects.all()
 					commentaire_poster=True
 					return redirect(new_index)
 		return render(request, 'appPrincipale/commentaire.html', locals())
