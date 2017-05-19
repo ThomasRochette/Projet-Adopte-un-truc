@@ -62,7 +62,7 @@
 								<h3><a href="/accueil/article">{{objet.nom}}</a></h3>
 								<span class="posted_on">{{objet.categorie}}</span>
 								<span class="comment"><a href=""><i class="icon-speech-bubble"></i></a></span>
-								<p>{{objet.description|truncatechars:35}}</p>
+								<p>{{objet.description|truncatechars:25}}</p>
 								<button type="submit" class="btn btn-primary">En savoir plus</button>
 							</div>
 						</div>
@@ -85,15 +85,15 @@
 {% endblock %}
 
 {% block script %}
-  
-   
+
+
    <script>
 
 	function testt(){
 		window.alert("ta");
 	}
 
-	
+
 	$("#get_more").click(function(){
 		$.ajax({
 			type:"GET",
@@ -101,36 +101,36 @@
 			dataType : 'json',
 			success: function(mes_objets, status){
 				$(mes_objets).appendTo('#id_du_block_ou_ajouter');
-				/*J'ai essayer de construire la meme structure en html mais je sais 
-				
+				/*J'ai essayer de construire la meme structure en html mais je sais
+
 				var form=document.creatElement('form');
 				form.action="{% url "article" %}";
 				form.method="post";
-				
+
 				var col_lg_4=document.creatElement('div');
 				col_lg_4.class="col-lg-4 col-md-4";
 				form.appendChild(col_lg_4);
-				
+
 				var fh5co_blog=document.creatElement('div');
 				fh5co_blog.class="fh5co-blog animate-box";
 				col_lg_4.appendChild(fh5co_blog);
-				
+
 				for(i=; i<mes_objets.length; i++){
-				
+
 					$('ul').append('<li>'+mes_objets[i]+'</li>');
-				
+
 					var objet_id=document.creatElement('input');
 					objet_id.type="hidden";
 					objet_id.name="objet_id";
 					objet_id.value=mes_objets[i];
 				}*/
-				
+
 			},
 			error: function(resultat, status,error){
-				
+
 			},
 			complete: function(resultat, status){
-				
+
 			}
 			/*<form action="{% url "article" %}" method="post">
 					{% csrf_token %}
@@ -152,15 +152,15 @@
 					</div>
 				</form>*/
 		});
-		
+
 	});
-	
+
 	//avec load() qui permet de charger tout simplement du contenu sans réflection
 	$("#container").click(function(){
 		('#container').load('mapage.html');
 	});
 
-	
+
 
 </script>
 {% endblock %}

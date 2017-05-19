@@ -127,7 +127,7 @@ def new_contact(request):
 						elif objet.categorie.titre=="Vehicules":
 							objet.photo="photos/vehicules.png"
 						elif objet.categorie.titre=="Immobilier":
-							objet.photo="photos/pret-immo.png"
+							objet.photo="photos/pret_immo.png"
 						elif objet.categorie.titre=="Vacances":
 							objet.photo="photos/vacances.png"
 						elif objet.categorie.titre=="Multimedia":
@@ -321,7 +321,7 @@ def new_commentaire(request):
 				else :
 					print("pas vulgaire")
 					comentaire=form.save(commit=False)
-	
+
 					objet=Objet.objects.get(id=objet_id)
 
 					comentaire.content_object=objet
