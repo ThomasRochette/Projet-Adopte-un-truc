@@ -28,12 +28,18 @@ gros_mon=[" putain "," merde "," chier "," enculer "," batard "," salaud "," sal
 def test_generique(request):
 	return render(request,'appPrincipale/test_vu_generique.html')
 
-def more_todo(request):
-	if request.is_jac():
-		todo_items=Objet.objects.filter(date__day=datetime.now().day)
-		#todo_items=['mow Lown','buy graocerie',]
-		mes_objets =json.dumps(todo_items)
-		return HttpResponse(mes_objets,content_type='appPrincipale/json')
+		
+def more(request):
+	if request.is_ajax():
+		print("reques",request)
+		comp=request.GET.get("c");
+		print(comp);
+		com=int(comp)
+		print(datetime.now().day)
+
+		objets=Objet.objects.all()[com*3:(com+1)*3]
+		print(objets)
+		return render(request, 'appPrincipale/ajx_work.html',locals())
 	else :
 		return redirect(new_work)
 
@@ -159,7 +165,7 @@ def new_contact(request):
 def new_index(request):
     nom=request.user.username
     categories = Categorie.objects.all()
-    objets = Objet.objects.all()
+    objets = Objet.objects.all()[0:3]
     return render(request, 'appPrincipale/index.html',locals())
 
 def new_services(request):
@@ -196,7 +202,7 @@ def new_work(request):
     nom = request.user.username
     categories = Categorie.objects.all()
     if request.method=="GET":
-        objets = Objet.objects.all()
+        objets = Objet.objects.all()[0:3]
     if request.method == "POST":
         string_titre_catgorie = request.POST.get("Titre_Categorie","Toutes")
         nom_article = request.POST.get("Nom_Article","-1")

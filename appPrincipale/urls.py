@@ -28,7 +28,8 @@ urlpatterns = [
 	url(r'^modifier_profil/$', views.modifier_profil, name='modifier_profil'),
 	url(r'^se_connecter/$', views.se_connecter, name='se_connecter'),
 	
-	url(r'ajax/$',views.more_todo),
+	url(r'work/ajax/$',views.more),
+	url(r'index/ajax/$',views.more),
 
 
 

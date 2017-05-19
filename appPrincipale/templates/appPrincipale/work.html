@@ -52,6 +52,10 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
+	
+		<script src="https://code.jquery.com/jquery-3.2.1.js"
+	 integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+	 crossorigin="anonymous"></script>
 
 	</head>
 	<body onload="initialize(); codeAddress();" >
@@ -141,7 +145,12 @@
 		</div>
 	</header>
 
+		
 
+  
+
+
+		
 	    <script>
 			var geocoder;
 		  var map;
@@ -283,10 +292,10 @@
 			</div>
 	</div>
 	{% endif %}
-
+<div class="corp">
 	<div style="overflow: auto" id="fh5co-project">
 		<div class="container">
-			<div class="row">
+			<div class="row" id="rrow">
 				{%if not objets %}
 					<h3 class="wrong_connect">Aucun article ne correspond à vos recherches.</h3>
 				{% else %}
@@ -306,7 +315,7 @@
 								<h3><a href="/accueil/article">{{objet.nom|truncatechars:20}}</a></h3>
 								<span class="posted_on">{{objet.categorie}}</span>
 								<span class="comment"><a href=""><i class="icon-speech-bubble"></i></a></span>
-								<p>{{objet.description|truncatechars:25}</p>
+								<p>{{objet.description|truncatechars:30}}</p>
 								<button type="submit" class="btn btn-primary">En savoir plus</button>
 							</div>
 						</div>
@@ -317,6 +326,36 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="fh5co-blog animate-box">
+<button id="dada" class="btn btn-primary">Plus d'articles</button>
+</div>
+
+
+ <script>
+	 var c=1;
+	 $("#dada").click(function(){
+
+		$.ajax({
+			type:"GET",
+			url:"ajax",
+			data :{
+				 c
+			},
+			dataType : 'html',
+			
+			success: function(mes_objets, status){
+				
+				$('.corp').append(mes_objets);
+		
+				c=c+1;
+			}
+		});
+	});
+	
+ 
+ </script>
 
 
 	<div id="fh5co-started">

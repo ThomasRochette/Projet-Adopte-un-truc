@@ -42,6 +42,7 @@
 	{% endblock %}
 
 {% block fh5co-projet %}
+<div class="corp">
 	<div style="overflow: auto" id="fh5co-project">
 		<div class="container">
 			<div class="row">
@@ -73,13 +74,35 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="fh5co-blog animate-box">
+<button id="dada" class="btn btn-primary">Plus d'articles</button>
+</div>
 
-	<ul>
-		<li>take the trash</li>
-	</ul>
-	<button id="test" onClick="testt()">Plus d'article bt</button>
-	<input type="button" value="Plus d'article" name="MORE" id="get_more"</button>
-	<button class='bt get_more' id="get_more">more</button>
+
+ <script>
+	 var c=1;
+	 $("#dada").click(function(){
+
+		$.ajax({
+			type:"GET",
+			url:"ajax",
+			data :{
+				 c
+			},
+			dataType : 'html',
+			
+			success: function(mes_objets, status){
+				
+				$('.corp').append(mes_objets);
+		
+				c=c+1;
+			}
+		});
+	});
+	
+ 
+ </script>
 
 
 {% endblock %}
