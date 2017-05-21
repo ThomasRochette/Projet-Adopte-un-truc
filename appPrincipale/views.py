@@ -63,7 +63,7 @@ def ajax_recherche(request):
 
 	else :
 		return redirect(new_work)
-		
+
 def more(request):
 	if request.is_ajax():
 		if request.method=="GET":
@@ -104,8 +104,8 @@ def new_blog(request):
 
 #affiche le profil du gars
 def new_about(request):
-    nom=request.user.username
-    if(nom != ''):
+	nom=request.user.username
+	if(nom != ''):
 		user=request.user
 		objets=Objet.objects.filter(user=request.user)
 
@@ -118,13 +118,12 @@ def new_about(request):
 			objet=Objet.objects.get(id=objet_id)
 			objet.delete()
 		return render(request, 'appPrincipale/about.html',locals())
-    else:
-        return redirect(se_connecter)
+	else:
+		return redirect(se_connecter)
 #ajouter un nouvel objet
 def new_contact(request):
-    nom = request.user.username
-    if(nom != ''):
-
+	nom = request.user.username
+	if(nom != ''):
 		categories = Categorie.objects.all()
 		objets = Objet.objects.all()
 		nom = request.user.username
@@ -194,9 +193,8 @@ def new_contact(request):
 				print("form pas valid")
 				objet_false=True
 		return render(request, 'appPrincipale/new_objet.html',locals())
-
-    else:
-        return redirect(se_connecter)
+	else:
+		return redirect(se_connecter)
 
 def new_index(request):
     nom=request.user.username
@@ -212,22 +210,16 @@ def new_services(request):
 
 #affiche l'article avec les commentaireq
 def new_article(request):
-
-    nom = request.user.username
-
-    user=request.user
-    categories = Categorie.objects.all()
-
-    peut_commenter=True
-    if request.method=="GET":
+	nom = request.user.username
+	user=request.user
+	categories = Categorie.objects.all()
+	peut_commenter=True
+	if request.method=="GET":
 		objets = Objet.objects.all()[0:3]
 		return render(request, 'appPrincipale/index.html',locals())
-    if request.method == "POST":
-
+	if request.method == "POST":
 		objet_image = request.POST.get("objet_image")
-
 		objet_id=request.POST.get("objet_id")
-
 		objet=Objet.objects.get(id=objet_id)
 
 		if objet.user.id == request.user.id:
@@ -414,8 +406,8 @@ def terms(request):
 
 
 def modifier_objet(request):
-    nom = request.user.username
-    if(nom != ''):
+	nom = request.user.username
+	if(nom != ''):
 		categories = Categorie.objects.all()
 		nom = request.user.username
 		code_false=False
@@ -478,6 +470,5 @@ def modifier_objet(request):
 				print("form pas valid")
 
 		return render(request, 'appPrincipale/modifier_objet.html',locals())
-
-    else:
-        return redirect(se_connecter)
+	else:
+		return redirect(se_connecter)

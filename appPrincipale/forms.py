@@ -8,11 +8,11 @@ class ObjetForm(forms.ModelForm):
     class Meta:
         model = Objet
         exclude=('photo',)
-	def clean(self):
-		cleaned_data = super(ComentaireForm, self).clean()
-		nom= cleaned_data.get('nom')
-		description = cleaned_data.get('description')
-		return cleaned_data
+    def clean(self):
+        cleaned_data = super(ComentaireForm, self).clean()
+        nom= cleaned_data.get('nom')
+        description = cleaned_data.get('description')
+        return cleaned_data
 
 
 class ComentaireForm(forms.ModelForm):
@@ -20,14 +20,13 @@ class ComentaireForm(forms.ModelForm):
         model = Comentaire
         #fields = '__all__'
         exclude=('content_type','object_id','content_object','user')
-
-	def clean(self):
-		cleaned_data = super(ComentaireForm, self).clean()
-		titre = cleaned_data.get('titre')
-		contenu = cleaned_data.get('contenu')
-		raise forms.ValidationError("nique")
-		self.add_error("contenu","va nqieur")
-		return cleaned_data
+    def clean(self):
+        cleaned_data = super(ComentaireForm, self).clean()
+        titre = cleaned_data.get('titre')
+        contenu = cleaned_data.get('contenu')
+        raise forms.ValidationError("nique")
+        self.add_error("contenu","va nqieur")
+        return cleaned_data
 
 
 
