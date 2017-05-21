@@ -28,18 +28,54 @@ gros_mon=[" putain "," merde "," chier "," enculer "," batard "," salaud "," sal
 def test_generique(request):
 	return render(request,'appPrincipale/test_vu_generique.html')
 
+def ajax_recherche(request):
+	if request.is_ajax():
+		if request.method=="GET":
+			print(request)
+			string_titre_catgorie = request.GET.get("r_categorie","Toutes")
+			nom_article = request.GET.get("article","-1")
+			code_postal = request.GET.get("code_postal","Toutes")
+			print(string_titre_catgorie)
+			print(nom_article)
+			print(code_postal)
+			#macat=Categorie.objects.filter(titre=string_titre_catgorie)
+			if string_titre_catgorie != "Toutes" and nom_article != "" and code_postal!="Toutes":
+				objets = Objet.objects.filter(categorie__titre=string_titre_catgorie).filter(Q(nom__contains = nom_article) |Q( description__contains = nom_article) & Q(code_postal__contains = code_postal))
+			elif string_titre_catgorie != "Toutes" and nom_article != "" and code_postal=="Toutes":
+				objets = Objet.objects.filter(categorie__titre=string_titre_catgorie).filter(Q(nom__contains = nom_article) |Q( description__contains = nom_article))
+
+			elif (string_titre_catgorie != "Toutes") and (nom_article == "") and code_postal!="Toutes":
+				objets = Objet.objects.filter(Q(categorie__titre=string_titre_catgorie)&Q(code_postal__contains = code_postal))
+			elif (string_titre_catgorie != "Toutes") and (nom_article == "") and code_postal=="Toutes":
+				objets = Objet.objects.filter(categorie__titre=string_titre_catgorie)
+
+			elif (string_titre_catgorie == "Toutes") and (nom_article != "") and code_postal!="Toutes":
+				print("recherche que postal et article")
+				objets = Objet.objects.filter(Q(nom__contains = nom_article) | Q( description__contains = nom_article)&Q(code_postal__contains = code_postal))
+			elif (string_titre_catgorie == "Toutes") and (nom_article != "") and code_postal=="Toutes":
+				objets = Objet.objects.filter(Q(nom__contains = nom_article) |Q( description__contains = nom_article))
+			elif (string_titre_catgorie == "Toutes") and (nom_article == "") and code_postal!="Toutes":
+				print("recherche que postal")
+				objets = Objet.objects.filter(Q(code_postal__contains = code_postal))
+			else:
+				objets = Objet.objects.all()
+		return render(request, 'appPrincipale/ajx_work.html', locals())
+
+	else :
+		return redirect(new_work)
 		
 def more(request):
 	if request.is_ajax():
-		print("reques",request)
-		comp=request.GET.get("c");
-		print(comp);
-		com=int(comp)
-		print(datetime.now().day)
+		if request.method=="GET":
+			print("reques",request)
+			comp=request.GET.get("c");
+			print(comp);
+			com=int(comp)
+			print(datetime.now().day)
 
-		objets=Objet.objects.all()[com*3:(com+1)*3]
-		print(objets)
-		return render(request, 'appPrincipale/ajx_work.html',locals())
+			objets=Objet.objects.all()[com*3:(com+1)*3]
+			print(objets)
+			return render(request, 'appPrincipale/ajx_work.html',locals())
 	else :
 		return redirect(new_work)
 
@@ -181,22 +217,26 @@ def new_article(request):
 
     user=request.user
     categories = Categorie.objects.all()
-    objets = Objet.objects.all()
+
     peut_commenter=True
+    if request.method=="GET":
+		objets = Objet.objects.all()[0:3]
+		return render(request, 'appPrincipale/index.html',locals())
     if request.method == "POST":
 
-        objet_image = request.POST.get("objet_image")
+		objet_image = request.POST.get("objet_image")
 
-        objet_id=request.POST.get("objet_id")
+		objet_id=request.POST.get("objet_id")
 
-        objet=Objet.objects.get(id=objet_id)
+		objet=Objet.objects.get(id=objet_id)
 
-        if objet.user.id == request.user.id:
-            peut_supprimer= True
-            peut_commenter = False
+		if objet.user.id == request.user.id:
+			peut_supprimer= True
+			peut_commenter = False
 
-        commentaires=Comentaire.objects.filter(object_id=objet_id)
-    return render(request, 'appPrincipale/services.html',locals())
+		commentaires=Comentaire.objects.filter(object_id=objet_id)
+		return render(request, 'appPrincipale/services.html',locals())
+
 
 def new_work(request):
     nom = request.user.username
@@ -284,6 +324,7 @@ def logout_view(request):
     deconnect=True
     #auth.lougout(request)
     return redirect(new_index)
+
 
 
 def new_commentaire(request):

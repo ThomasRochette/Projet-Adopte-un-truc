@@ -117,7 +117,7 @@
 											<label class="categorie">
 											    Catégorie:
 											    <span class="custom-dropdown custom-dropdown--white">
-											        <select class="custom-dropdown__select custom-dropdown__select--white" name="Titre_Categorie">
+											        <select id="r_categorie" class="custom-dropdown__select custom-dropdown__select--white" name="Titre_Categorie">
 																<option>Toutes</option>
 																{% for categorie in categories %}
 																<option>{{categorie.titre}}</option>
@@ -145,14 +145,48 @@
 		</div>
 	</header>
 
+ <script>
+	 $("#fh5co-header-subscribe").submit(function(event){
+
+		 event.preventDefault();
+		
+	
+		var article = $('#article').val();
+		var code_postal = $('#id_code_postal').val();
+		var r_categorie = $('#r_categorie').val();
+
+		$.ajax({
+			type:"GET",
+			url:"ajax_recherche",
+			data :{
+				 "article":article,
+				 "code_postal":code_postal,
+				 "r_categorie":r_categorie,
+			},
+			dataType : 'html',
+			
+			success: function(mes_objets, status){
+				
+				$('#corp').replaceWith(mes_objets);	
+				initialize(); 
+				codeAddress();
+				$('html, body').animate({scrollTop: $('#map').offset().top}, 2000);
+				
+				
+				
+			}
+		});
+	});
+	
+ 
+ </script>
 		
 
-  
 
 
 		
 	    <script>
-			var geocoder;
+		var geocoder;
 		  var map;
 		  function initialize() {
 		    geocoder = new google.maps.Geocoder();
@@ -227,29 +261,39 @@
 															'Error: Your browser doesn\'t support geolocation.');
 			}
 					var i=0;
-					{% for objet in objets %}
+					/* var add=['#1','#2','#3','#4','#5','#6','#7','#8','#9','#10','#11','#12','#13','#14','#1','#16'];
+					 for(var k=0; k<16;k++){
+						if($(add[k]).val()==undefined){
+							
+						}else{
+						
+						address = $(add[k]).val();*/
+					
+							$('.divAdresseMa').each(function(index){	
+								
+									address=$(this).val();
+									
+									//position_user="6 avenue des arts 69100";
+								//var address = document.getElementById('address').value;
+									//var distance = google.maps.geometry.spherical.computeDistanceBetween( "paris", "new_york" );
+									//window.alert(distance);
 
-						address = "{{objet.code_postal}}+{{objet.adresse}}";
-						//position_user="6 avenue des arts 69100";
-				    //var address = document.getElementById('address').value;
-						//var distance = google.maps.geometry.spherical.computeDistanceBetween( "paris", "new_york" );
-						//window.alert(distance);
-
-					  geocoder.geocode( { 'address': address}, function(results, status) {
-				      if (status == 'OK') {
-								i=i+1;
-				        //map.setCenter(results[0].geometry.location);
-
-				        var marker = new google.maps.Marker({
-				            map: map,
-				            position: results[0].geometry.location,
-										Title: "article n°"+i.toString()+" - {{objet.nom}}"
-				        });
-				      } else {
-				        //alert('Geocode was not successful for the following reason: ' + status);
-				      }
-				    });
-					{% endfor %}
+								  geocoder.geocode( { 'address': address}, function(results, status) {
+								  if (status == 'OK') {
+											i=i+1;
+									//map.setCenter(results[0].geometry.location);
+								
+									var marker = new google.maps.Marker({
+										map: map,
+										position: results[0].geometry.location,
+													Title: "article n°"+i.toString()
+									});
+								  } else {
+									//alert('Geocode was not successful for the following reason: ' + status);
+								  }
+								});
+							//}
+						});
 
 		  }
 
@@ -292,7 +336,8 @@
 			</div>
 	</div>
 	{% endif %}
-<div class="corp">
+
+ <div class="corp" id="corp"> 
 	<div style="overflow: auto" id="fh5co-project">
 		<div class="container">
 			<div class="row" id="rrow">
@@ -305,6 +350,8 @@
 					<div class="col-lg-4 col-md-4">
 						<div class="fh5co-blog animate-box">
 
+							<input class="divAdresseMa" type="hidden" id="{{objet.id}}" value="{{objet.code_postal}}+{{objet.adresse}}">
+						
 							<input type="hidden" name="objet_id" value="{{objet.id}}"/>
 							<!--<input type="hidden" name="article_nom" value="{{objet.nom}}"/>
 							<input type="hidden" name="article_description" value="{{objet.description}}"/>
@@ -350,6 +397,7 @@
 				$('.corp').append(mes_objets);
 		
 				c=c+1;
+				$('html, body').animate({scrollTop: $('#dada').offset().top}, 2000);
 			}
 		});
 	});
@@ -441,7 +489,8 @@
 		} else {
 				window.onload = goToArticle;
 		}
-	} </script>
+	} 
+	</script>
 	<!-- jQuery -->
 	<script src="{%static 'appPrincipale/js/jquery.min.js' %}"></script>
 	<!-- jQuery Easing -->

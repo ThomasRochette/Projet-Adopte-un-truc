@@ -29,7 +29,9 @@ urlpatterns = [
 	url(r'^se_connecter/$', views.se_connecter, name='se_connecter'),
 	
 	url(r'work/ajax/$',views.more),
+	url(r'work/ajax_recherche/$',views.ajax_recherche),
 	url(r'index/ajax/$',views.more),
+	
 
 
 
